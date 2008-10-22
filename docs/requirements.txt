@@ -1,0 +1,12 @@
+* create registration system for website
+--general signup
+----access
+----newsletters/announcements
+
+---- retrieve lost password
+
+---- how to make it so that if people move away they can't access with new password
+
+
+
+*

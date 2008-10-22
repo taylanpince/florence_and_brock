@@ -1,0 +1,39 @@
+* home
+	* --intro article
+
+
+
+* news items
+	* --reminders
+			--next payments due?
+			--garbage pickup changes
+
+
+
+* contacts
+	* -- board
+		-- profiles?
+		-- fred
+		-- city councillor?	
+	
+
+
+* board info
+	* -- minutes
+	  -- special announcements
+	  -- financial info
+	  	-- budget
+	  	-- how to pay
+		-- audit report
+	* --copies of declaration/rules	
+
+
+* general info
+	* -- comment board
+	* -- community info
+		-- councillor
+		-- police/fire
+		-- condo act
+		-- tarion
+		-- garbage schedule
+	* --local links
