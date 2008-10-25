@@ -51,7 +51,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     
-    'debug_toolbar',
     'django_evolution',
     'django_extensions',
     
