@@ -1,0 +1,97 @@
+.. _ref-customization:
+
+Customization
+=============
+
+As more sites are built using Pinax, more best practices will emerge, but for
+now what we recommend is:
+
+- Choose which :ref:`project <ref-project>` you would like to use as a starting 
+  point.
+- Copy that project into a directory outside of the subversion checkout.
+- Make any necessary changes to your ``manage.py``, ``deployment/*.wsgi`` etc 
+  in that copied project directory to reflect the location of your Pinax 
+  checkout.  The most important variable to change in those files is 
+  ``PINAX_ROOT``.
+- Make necessary changes to the ``settings.py`` and ``urls.py`` files in your
+  copied directory.
+- Change the domain and display name of the Site in the admin interface. 
+- Develop your custom apps under your new project or anywhere on Python path.
+- Develop your own templates under your new project.
+
+.. _ref-project:
+
+
+Choosing a Project
+------------------
+
+By default, Pinax provides two projects to use as a starting point for 
+customization.  Depending on your development style, you may prefer one project 
+over the other.
+
+basic_project
+    This project comes with the bare minimum set of applications and templates
+    to get you started.  It includes no extra tabs--only the profile and notices 
+    tabs are included by default. From here you can add any extra functionality 
+    and applications that you would like.
+
+complete_project
+    This project comes fully-featured, with everything that Pinax provides
+    enabled by default.  It provides all tabs available, etc.  From here you can
+    remove applications that you do not want to use, and add your own 
+    applications as well.
+
+
+Settings You Will (Probably) Want To Override
+---------------------------------------------
+
+- ``DEBUG``
+- ``TEMPLATE_DEBUG``
+- ``LOGGING_OUTPUT_ENABLED``
+- ``ADMINS``
+- ``MANAGERS``
+- ``DATABASE_ENGINE``
+- ``DATABASE_NAME``
+- ``DATABASE_USER``
+- ``DATABASE_PASSWORD``
+- ``DATABASE_HOST``
+- ``DATABASE_PORT``
+- ``TIME_ZONE``
+- ``SECRET_KEY``
+- ``DEFAULT_FROM_EMAIL``
+- ``SERVER_EMAIL``
+- ``MAILER_PAUSE_SEND``
+- ``SEND_BROKEN_LINK_EMAILS``
+- ``EMAIL_HOST``
+- ``EMAIL_PORT``
+- ``EMAIL_HOST_USER``
+- ``EMAIL_HOST_PASSWORD``
+- ``EMAIL_SUBJECT_PREFIX``
+- ``EMAIL_DEBUG``
+- ``CONTACT_EMAIL``
+- ``URCHIN_ID``
+- ``BBAUTH_APP_ID``
+- ``BBAUTH_SHARED_SECRET``
+- ``SITE_NAME``
+
+All but ``MAILER_PAUSE_SEND``, ``CONTACT_EMAIL``, ``URCHIN_ID``,
+``BBAUTH_APP_ID``, ``BBAUTH_SHARED_SECRET`` and ``SITE_NAME`` are just the
+standard Django settings.
+
+
+``base.html`` versus ``site_base.html``
+---------------------------------------
+
+In the sample projects, ``templates/base.html`` is intended for overall page structure
+whereas ``templates/site_base.html`` is intended for adding site-specific content that
+is to be found on all pages (things like logo, navigation or footers).
+
+If you are writing a theme to be used across multiple sites, you should modify
+``base.html``, not ``site_base.html``. If you want to keep a particular theme
+but modify content for a specific site, you should modify ``site_base.html``.
+
+
+Adding Tabs
+-----------
+
+See :ref:`ref-tabs`
