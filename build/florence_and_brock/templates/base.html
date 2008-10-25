@@ -4,9 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<title>Florence &amp; Brock - {% block title %}{% endblock %}</title>
+	<title>Florence &amp; Brock - {% block title %}Home{% endblock %}</title>
 	
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}images/favicon.ico" />
 	
@@ -29,6 +29,7 @@
 	
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.class.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/florencebrock.js"></script>
     
 	{% block javascript %}{% endblock %}
 	
@@ -38,17 +39,88 @@
 
 <body>
 
-<div id="Container">
+    <div id="Wrapper">
 
-    <div id="Content">
+        <div id="Container">
+    
+            <div id="Header">
+                <form id="SearchForm" method="post">
+                    <input type="text" name="keywords" />
+                    <input type="submit" value="Search" />
+                </form>
         
-        {% block content %}
+                <div id="HeaderTitle">Florence <span class="amp">&amp;</span> Brock</div>
+                <div id="HeaderSubTitle">a site for us to share information and announcements for our little community</div>
+            </div>
+    
+            <ul id="Navigation">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">News</a></li>
+                <li><a href="#">Archive</a></li>
+                <li><a href="#">Contacts</a></li>
+                <li><a href="#">Documents</a></li>
+            </ul>
+
+            <div id="Content">
         
-        {% endblock %}
+                <h1>News Items <span class="amp">&</span> Updates</h1>
+                
+                <div id="Columns">
+                    
+                    <div id="LeftColumn">
+                        
+                        <ul id="PostList">
+                            
+                            <li>
+                                <h2><a href="#">Announcement</a></h2>
+                                <p class="post-info">Posted by <a href="#">Dael</a> on August 14, 2008</p>
+                                <p>Lorem ipsum dolor sit amet, <a href="#">consectetur adipisicing elit</a>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                            </li>
+                            
+                            <li>
+                                <h2><a href="#">Non-Board Items</a></h2>
+                                <p class="post-info">Posted by <a href="#">Dael</a> on August 12, 2008</p>
+                                <img src="{{ MEDIA_URL }}images/tmp-image-1.jpg" alt="Temporary Image" class="thumbnail" />
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            </li>
+                            
+                        </ul>
+                        
+                    </div>
+                    
+                    <div id="RightColumn">
+                        
+                        <div class="sidebar-box coloured">
+                            <h2>Updates?</h2>
+                            <img src="{{ MEDIA_URL }}images/tmp-image-2.jpg" alt="Temporary Image" class="thumbnail" />
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do <a href="#">eiusmod tempor incididunt ut</a> labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+                        
+                        <div class="sidebar-box">
+                            <h2>Quick Links</h2>
+                            <ul class="bulleted">
+                                <li><a href="#">Some Link</a></li>
+                                <li><a href="#">Some Other Link</a></li>
+                                <li><a href="#">A Final Link</a></li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                
+                </div>
+            
+            </div>
+            
+            <div id="Footer">
+                <p>Contact <a href="#">bod@florenceandbrock.com</a> for any questions.</p>
+                <p class="no-margin">Disclaimer: This website is paid for and managed by the owners and tenants of 115 to 135 Florence Street (odd numbers only) respectively, and viewing this site is strictly limited to owners and residents of the Brockton Village townhomes.</p>
+            </div>
+        
+        </div>
         
     </div>
-    
-</div>
 
 </body>
 </html>
