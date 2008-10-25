@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Usage &mdash; Pinax v0.5.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../../',
+          VERSION:     '0.5.0',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: ''
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/interface.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="contents" title="Global table of contents" href="../../contents.html" />
+    <link rel="index" title="Global index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Pinax v0.5.0 documentation" href="../../index.html" />
+    <link rel="up" title="django-ajax-validation" href="index.html" />
+    <link rel="next" title="Serving Ajax Validation With Your Static Media Server" href="serving-ajax-validation-media-server.html" />
+    <link rel="prev" title="django-ajax-validation" href="index.html" />
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="serving-ajax-validation-media-server.html" title="Serving Ajax Validation With Your Static Media Server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-ajax-validation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../../external_apps.html" accesskey="U">External Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">django-ajax-validation</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section">
+<h1 id="usage">Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>To use, Ajax Validation requires only that you add a URL(one per form), and some javascript to any page with the form.</p>
+<p>For example, if you had the following form:</p>
+<div class="highlight"><pre><span class="k">from</span> <span class="nn">django</span> <span class="k">import</span> <span class="n">forms</span>
+
+<span class="k">class</span> <span class="nc">ContactForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;Your Name&#39;</span><span class="p">)</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;Your Email&#39;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s">&#39;Your Message&#39;</span><span class="p">,</span> <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">Textarea</span><span class="p">)</span>
+</pre></div>
+<p>You would need to add the following url to your urls.py(you also need to import the form class):</p>
+<div class="highlight"><pre><span class="p">(</span><span class="s">r&#39;^SOME/URL/$&#39;</span><span class="p">,</span> <span class="s">&#39;ajax_validation.views.validate&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;form_class&#39;</span><span class="p">:</span> <span class="n">ContactForm</span><span class="p">},</span> <span class="s">&#39;contact_form_validate&#39;</span><span class="p">)</span>
+</pre></div>
+<p>The URL can take any arguments(named, or unamed), and you can also provide a
+callback function, this function is given request, *args, and **kwargs and
+should return a dictionary which is passed to the form constructor.</p>
+<p>And then in the template in which you are displaying the form, you should add:</p>
+<pre>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"&gt;&lt;/script&gt;
+{% load jquery_validation %}
+{% include_validation %}
+&lt;script type="text/javascript"&gt;
+    $(function()    {
+        $('#form').validate('{% url contact_form_validate %}', {type: 'ul', fields: ['email'], dom: $('#id_email'), event: 'keyup'});
+        $('#form').validate('{% url contact_form_validate %}', {type: 'ul'});
+    });
+&lt;/script&gt;</pre>
+<p>As you can see, you need to have jQuery for this to work(here it is being loaded
+from google).  In the javascript you use jQuery&#8217;s selectors to select where the
+form is, and the validate method takes 5 parameters, all optional, first is the
+URL of the validation, here we reverse the URL we set up earlier.  The second
+parameter is a dictionary, it is optional and should either provide type(ul,
+table, or p), this is the type of renderer you used for django&#8217;s forms(form.as_p,
+etc.), the default is table if nothing is provided.  It can also take a callback
+option which is a function that recieves data, which is the JSON representation
+of any errors, and form, which is the jquery object that you provided.  Finally,
+it takes fields, which is a list of the fields that should be validated, it will
+not display errors that aren&#8217;t in that list of fields.  The last 2 options are
+dom and event, these allow you to choose when the validation will occur, dom
+should be a jQuery object(i.e.: $(&#8216;#my_field&#8217;)), and event should be a jQuery
+event(listed <a class="reference" href="http://docs.jquery.com/Events/bind#overview">here</a>).</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">django-ajax-validation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="serving-ajax-validation-media-server.html" title="next chapter">Serving Ajax Validation With Your Static Media Server</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/external/ajax-validation/usage.txt">Show Source</a></li>
+            </ul>
+            <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="serving-ajax-validation-media-server.html" title="Serving Ajax Validation With Your Static Media Server"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-ajax-validation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../../external_apps.html" accesskey="U">External Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">django-ajax-validation</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, James Tauber and Pinax Team.
+      Last updated on Oct 23, 2008.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

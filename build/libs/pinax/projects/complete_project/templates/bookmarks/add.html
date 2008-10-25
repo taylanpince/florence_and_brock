@@ -1,0 +1,19 @@
+{% extends "bookmarks/base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% blocktrans %}Add Bookmark{% endblocktrans %}{% endblock %}
+
+
+{% block body %}
+    <h1>{% trans "Add Bookmark" %}</h1>
+    
+    <p>You can drag this '<a href="{{ bookmarklet }}">Add to {{ site_name }} Bookmarks</a>' link to your bookmark bar to post the pages you visit!</p>
+    
+    <form method="POST" action="">
+        <table>
+            {{ bookmark_form }}
+            <tr><td></td><td><input type="submit" value="{% trans 'add bookmark' %}"></td></tr>
+        </table>
+    </form>
+{% endblock %}

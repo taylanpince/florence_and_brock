@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Usage &mdash; Pinax v0.5.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../../',
+          VERSION:     '0.5.0',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: ''
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/interface.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="contents" title="Global table of contents" href="../../contents.html" />
+    <link rel="index" title="Global index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Pinax v0.5.0 documentation" href="../../index.html" />
+    <link rel="up" title="django-mailer" href="index.html" />
+    <link rel="next" title="django-dbtemplates" href="../dbtemplates/index.html" />
+    <link rel="prev" title="django-mailer" href="index.html" />
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../dbtemplates/index.html" title="django-dbtemplates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-mailer"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../../external_apps.html" accesskey="U">External Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">django-mailer</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section">
+<h1 id="usage">Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<p>django-mailer is asynchronous so in addition to putting mail on the queue you
+need to periodically tell it to clear the queue and actually send the mail.</p>
+<p>The latter is done via a command extension.</p>
+<div class="section">
+<h2 id="putting-mail-on-the-queue">Putting Mail On The Queue<a class="headerlink" href="#putting-mail-on-the-queue" title="Permalink to this headline">¶</a></h2>
+<p>Because django-mailer currently uses the same function signature as django&#8217;s
+core mail support you can do the following in your code:</p>
+<div class="highlight"><pre><span class="c"># favour django-mailer but fall back to django.core.mail</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">from</span> <span class="nn">mailer</span> <span class="k">import</span> <span class="n">send_mail</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">from</span> <span class="nn">django.core.mail</span> <span class="k">import</span> <span class="n">send_mail</span>
+</pre></div>
+<p>and then just call send_mail like you normally would in django:</p>
+<div class="highlight"><pre><span class="n">send_mail</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">message_body</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">DEFAULT_FROM_EMAIL</span><span class="p">,</span> <span class="n">recipients</span><span class="p">)</span>
+</pre></div>
+<p>You can have Django use the mailer for crash e-mails if you add the following
+to your settings.py file:</p>
+<div class="highlight"><pre><span class="n">MAILER_FOR_CRASH_EMAILS</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+<p>This can help when you have a large number of crashes occurring, as the
+default mail_admins will bring the site to a crawl posting the mail messages
+to the SMTP server. It will also give you a chance to purge excessive crash
+e-mails before they are sent.</p>
+</div>
+<div class="section">
+<h2 id="clear-queue-with-command-extensions">Clear Queue With Command Extensions<a class="headerlink" href="#clear-queue-with-command-extensions" title="Permalink to this headline">¶</a></h2>
+<p>With mailer in your INSTALLED_APPS, there will be two new manage.py commands
+you can run:</p>
+<blockquote>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">send_mail</span></tt> will clear the current message queue. If there are any
+failures, they will be marked deferred and will not be attempted again by
+<tt class="docutils literal"><span class="pre">send_mail</span></tt>.</li>
+<li><tt class="docutils literal"><span class="pre">retry_deferred</span></tt> will move any deferred mail back into the normal queue
+(so it will be attempted again on the next <tt class="docutils literal"><span class="pre">send_mail</span></tt>).</li>
+</ul>
+</blockquote>
+<p>You may want to set these up via cron to run regularly:</p>
+<pre>* * * * * (cd $PINAX; /usr/local/bin/python2.5 manage.py send_mail &gt;&gt; $PINAX/cron_mail.log 2&gt;&amp;1)
+0,20,40 * * * * (cd $PINAX; /usr/local/bin/python2.5 manage.py retry_deferred &gt;&gt; $PINAX/cron_mail_deferred.log 2&gt;&amp;1)</pre>
+<p>This attempts to send mail every minute with a retry on failure every 20 minutes.</p>
+<p><tt class="docutils literal"><span class="pre">manage.py</span> <span class="pre">send_mail</span></tt> uses a lock file in case clearing the queue takes
+longer than the interval between calling <tt class="docutils literal"><span class="pre">manage.py</span> <span class="pre">send_mail</span></tt>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3>Table Of Contents</h3>
+            <ul>
+<li><a class="reference" href="">Usage</a><ul>
+<li><a class="reference" href="#putting-mail-on-the-queue">Putting Mail On The Queue</a></li>
+<li><a class="reference" href="#clear-queue-with-command-extensions">Clear Queue With Command Extensions</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">django-mailer</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="../dbtemplates/index.html" title="next chapter">django-dbtemplates</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/external/mailer/usage.txt">Show Source</a></li>
+            </ul>
+            <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="../dbtemplates/index.html" title="django-dbtemplates"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-mailer"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../../external_apps.html" accesskey="U">External Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">django-mailer</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, James Tauber and Pinax Team.
+      Last updated on Oct 23, 2008.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1068 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>threadedcomments API Documentation &mdash; Pinax v0.5.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+          URL_ROOT:    '../../',
+          VERSION:     '0.5.0',
+          COLLAPSE_MODINDEX: false,
+          FILE_SUFFIX: ''
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/interface.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="contents" title="Global table of contents" href="../../contents.html" />
+    <link rel="index" title="Global index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="top" title="Pinax v0.5.0 documentation" href="../../index.html" />
+    <link rel="up" title="django-threadedcomments" href="index.html" />
+    <link rel="next" title="Tutorial 1" href="tutorial.html" />
+    <link rel="prev" title="django-threadedcomments" href="index.html" />
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-threadedcomments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../../external_apps.html" accesskey="U">External Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">django-threadedcomments</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section">
+<h1 id="threadedcomments-api-documentation">threadedcomments API Documentation<a class="headerlink" href="#threadedcomments-api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic">
+<p class="topic-title first"><a id="table-of-contents" name="table-of-contents">Table of Contents</a></p>
+<ul class="simple">
+<li><a class="reference" href="#threadedcomments-api-documentation" id="id2" name="id2">threadedcomments API Documentation</a><ul>
+<li><a class="reference" href="#models" id="id3" name="id3">Models</a><ul>
+<li><a class="reference" href="#common-fields" id="id4" name="id4">Common Fields</a></li>
+<li><a class="reference" href="#threadedcomment" id="id5" name="id5"><tt class="docutils literal"><span class="pre">ThreadedComment</span></tt></a></li>
+<li><a class="reference" href="#freethreadedcomment" id="id6" name="id6"><tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference" href="#custom-managers" id="id7" name="id7">Custom Managers</a><ul>
+<li><a class="reference" href="#common-methods" id="id8" name="id8">Common Methods</a></li>
+<li><a class="reference" href="#threadedcommentmanager" id="id9" name="id9"><tt class="docutils literal"><span class="pre">ThreadedCommentManager</span></tt></a></li>
+<li><a class="reference" href="#publicthreadedcommentmanager" id="id10" name="id10"><tt class="docutils literal"><span class="pre">PublicThreadedCommentManager</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference" href="#moderation" id="id11" name="id11">Moderation</a><ul>
+<li><a class="reference" href="#additional-commentmoderator-properties" id="id12" name="id12">Additional <tt class="docutils literal"><span class="pre">CommentModerator</span></tt> Properties</a></li>
+<li><a class="reference" href="#model-manager-registration" id="id13" name="id13">Model-Manager Registration</a></li>
+<li><a class="reference" href="#example" id="id14" name="id14">Example</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#template-helpers" id="id15" name="id15">Template Helpers</a><ul>
+<li><a class="reference" href="#tags" id="id16" name="id16">Tags</a></li>
+<li><a class="reference" href="#filters" id="id17" name="id17">Filters</a></li>
+<li><a class="reference" href="#gravatar-support" id="id18" name="id18">Gravatar Support</a><ul>
+<li><a class="reference" href="#gravatar-tag" id="id19" name="id19">Gravatar Tag</a></li>
+<li><a class="reference" href="#gravatar-filter" id="id20" name="id20">Gravatar Filter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference" href="#views" id="id21" name="id21">Views</a><ul>
+<li><a class="reference" href="#create" id="id22" name="id22"><strong>Create</strong></a></li>
+<li><a class="reference" href="#edit" id="id23" name="id23"><strong>Edit</strong></a></li>
+<li><a class="reference" href="#delete" id="id24" name="id24"><strong>Delete</strong></a></li>
+<li><a class="reference" href="#previewing" id="id25" name="id25">Previewing</a></li>
+<li><a class="reference" href="#redirection" id="id26" name="id26">Redirection</a></li>
+<li><a class="reference" href="#ajax" id="id27" name="id27">AJAX</a></li>
+<li><a class="reference" href="#errors" id="id28" name="id28">Errors</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#forms" id="id29" name="id29">Forms</a><ul>
+<li><a class="reference" href="#threadedcommentform" id="id30" name="id30"><tt class="docutils literal"><span class="pre">ThreadedCommentForm</span></tt></a></li>
+<li><a class="reference" href="#freethreadedcommentform" id="id31" name="id31"><tt class="docutils literal"><span class="pre">FreeThreadedCommentForm</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference" href="#settings" id="id32" name="id32">Settings</a><ul>
+<li><a class="reference" href="#general" id="id33" name="id33">General</a></li>
+<li><a class="reference" href="#id1" id="id34" name="id34">Gravatar</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#more" id="id35" name="id35">More</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section">
+<h2 id="models">Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<p><em>threadedcomments</em> has two basic models that are included and supported by
+default: <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>, and <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>.  The difference
+between these two models is slight.  In essence, every <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>
+instance is associated with a user from <tt class="docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt>.
+While <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> has no such user association, it provides a few
+other identifying fields instead.</p>
+<div class="section">
+<h3 id="common-fields">Common Fields<a class="headerlink" href="#common-fields" title="Permalink to this headline">¶</a></h3>
+<p>Below is a listing of all of the fields that are shared by both
+<tt class="docutils literal"><span class="pre">ThreadedComment</span></tt> and <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>.</p>
+<p>These first three fields deal with the object with which this comment is
+associated:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">content_type</span></tt> [<tt class="docutils literal"><span class="pre">ForeignKey</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><strong>required</strong> The content type
+(<tt class="docutils literal"><span class="pre">django.contrib.contenttypes.models.ContentType</span></tt>) instance with which
+this comment is associated.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">object_id</span></tt> [<tt class="docutils literal"><span class="pre">PositiveIntegerField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><strong>required</strong> The value of the primary key to which this comment is
+associated.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">content_object</span></tt> [<tt class="docutils literal"><span class="pre">GenericForeignKey</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Combines the <tt class="docutils literal"><span class="pre">content_type</span></tt> and <tt class="docutils literal"><span class="pre">object_id</span></tt> fields to act as a
+virtual foreign key to the associated object.</td>
+</tr>
+</tbody>
+</table>
+<p>The next field is how we build our &#8220;threads&#8221;, or hierarchy:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">parent</span></tt> [<tt class="docutils literal"><span class="pre">ForeignKey</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">A self-referencing foreign key to whom this comment is addressed,
+being <tt class="xref docutils literal"><span class="pre">None</span></tt> if it is a toplevel comment (addressed directly to
+the original content object).</td>
+</tr>
+</tbody>
+</table>
+<p>The following fields deal with keeping track of dates of some events on
+this comment:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">date_submitted</span></tt> [<tt class="docutils literal"><span class="pre">DateTimeField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The date and time that this comment was saved for the first time.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">date_modified</span></tt> [<tt class="docutils literal"><span class="pre">DateTimeField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The most recent date and time that this comment was saved.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">date_approved</span></tt> [<tt class="docutils literal"><span class="pre">DateTimeField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The date and time that this comment set as <tt class="docutils literal"><span class="pre">is_approved=True</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+<p>The following fields deal with the actual content of the comment itself:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">comment</span></tt> [<tt class="docutils literal"><span class="pre">TextField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><strong>required</strong> The content of the comment.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">markup</span></tt> [<tt class="docutils literal"><span class="pre">IntegerField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><strong>required</strong> The format of the comment.  Values may be <tt class="docutils literal"><span class="pre">MARKDOWN</span></tt>,
+<tt class="docutils literal"><span class="pre">TEXTILE</span></tt>, <tt class="docutils literal"><span class="pre">REST</span></tt>, <tt class="docutils literal"><span class="pre">PLAINTEXT</span></tt>.  This can be used for display
+purposes when deciding how to format the comment for viewing.</td>
+</tr>
+</tbody>
+</table>
+<p>The following fields have to do with the status of the comment.  Combined,
+they describe whether the comment should be viewable or not:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">is_public</span></tt> [<tt class="docutils literal"><span class="pre">BooleanField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><strong>required</strong> This field defaults to <tt class="xref docutils literal"><span class="pre">True</span></tt>, but will bet set to
+<tt class="xref docutils literal"><span class="pre">False</span></tt> if any of the moderation checks in an associated <tt class="docutils literal"><span class="pre">Moderator</span></tt>
+fail.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">is_approved</span></tt> [<tt class="docutils literal"><span class="pre">BooleanField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><strong>required</strong> This field defaults to <tt class="xref docutils literal"><span class="pre">False</span></tt>, and it acts as an
+administrative override.  It allows administrators to manually &#8220;whitelist&#8221;
+comments which fail a moderation test resulting in <tt class="docutils literal"><span class="pre">is_public</span></tt>
+being set to <tt class="xref docutils literal"><span class="pre">False</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+<p>The following field is extra metadata that may be generally useful:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">ip_address</span></tt> [<tt class="docutils literal"><span class="pre">IPAddressField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">This field stores the IP address of the computer that is submits the
+comment.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="threadedcomment"><tt class="docutils literal"><span class="pre">ThreadedComment</span></tt><a class="headerlink" href="#threadedcomment" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">ThreadedComment</span></tt> is useful for allowing registered users to comment. It is
+for this reason that there is a required foreign key to <tt class="docutils literal"><span class="pre">User</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">user</span></tt> [<tt class="docutils literal"><span class="pre">ForeignKey</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Associates this comment with a particular user from
+<tt class="docutils literal"><span class="pre">django.contrib.auth.models.User</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="freethreadedcomment"><tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt><a class="headerlink" href="#freethreadedcomment" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> is better suited for allowing just about anyone to
+post comments on an item.  Instead of being associated with a particular user,
+instead it asks for some additional information like name and e-mail.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">name</span></tt> [<tt class="docutils literal"><span class="pre">CharField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><strong>required</strong> The name of the person leaving the comment.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">website</span></tt> [<tt class="docutils literal"><span class="pre">URLField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">If the person leaving the comment runs or is affiliated with a website,
+this is where that information would be stored.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">email</span></tt> [<tt class="docutils literal"><span class="pre">EmailField</span></tt>]:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">An e-mail address where the person leaving the comment can be reached.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section">
+<h2 id="custom-managers">Custom Managers<a class="headerlink" href="#custom-managers" title="Permalink to this headline">¶</a></h2>
+<p>Since it&#8217;s not a feature of most databases to store hierarchical information,
+some methods are needed to be able to access that hierarchical information in a
+meaningful way.  Also, since these comment objects can attach to any object,
+some convenience methods are helpful to query for and to create comments.
+These types of methods do not belong on the model itself, but rather on the
+<tt class="docutils literal"><span class="pre">Manager</span></tt>.</p>
+<div class="section">
+<h3 id="common-methods">Common Methods<a class="headerlink" href="#common-methods" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">get_tree(content_object,</span> <span class="pre">root=None)</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Runs a depth-first search on all of the comments attached to the given
+content object.  It then annotates a <tt class="docutils literal"><span class="pre">depth</span></tt> field which is an integer
+representing how many nodes away it is from the root node (the content
+object itself).  It also orders the comments appropriately into threads.  If
+a root comment is specified, the comment tree will start at that specific
+comment.  This way, one could get a single thread of the comments.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">create_for_object(content_object,</span> <span class="pre">**kwargs)</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Wraps the <tt class="docutils literal"><span class="pre">create</span></tt> method, and automatically fills out <tt class="docutils literal"><span class="pre">content_type</span></tt>
+and <tt class="docutils literal"><span class="pre">object_id</span></tt> fields based on those given by the content object.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">get_or_create_for_object(content_object,</span> <span class="pre">**kwargs)</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Wraps the <tt class="docutils literal"><span class="pre">get_or_create</span></tt> method, and automatically fills out
+<tt class="docutils literal"><span class="pre">content_type</span></tt> and <tt class="docutils literal"><span class="pre">object_id</span></tt> fields based on those given by the
+content object.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">get_for_object(content_object,</span> <span class="pre">**kwargs)</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Wraps the <tt class="docutils literal"><span class="pre">get</span></tt> method, and automatically fills out <tt class="docutils literal"><span class="pre">content_type</span></tt>
+and <tt class="docutils literal"><span class="pre">object_id</span></tt> fields based on those given by the content object.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">all_for_object(content_object,</span> <span class="pre">**kwargs)</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Prepopulates a QuerySet with all comments related to the given
+<tt class="docutils literal"><span class="pre">content_object</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="threadedcommentmanager"><tt class="docutils literal"><span class="pre">ThreadedCommentManager</span></tt><a class="headerlink" href="#threadedcommentmanager" title="Permalink to this headline">¶</a></h3>
+<p>This manager simply adds all of the aformentioned common methods onto the
+default manager.</p>
+<p>It can be used by using the <tt class="docutils literal"><span class="pre">objects</span></tt> property on either <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>
+or <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>.  An example would be:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">FreeThreadedComment</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">[&lt;FreeThreadedComment: This is a test.&gt;, &lt;FreeThreadedComment: spam&gt;]</span>
+</pre></div>
+</div>
+<div class="section">
+<h3 id="publicthreadedcommentmanager"><tt class="docutils literal"><span class="pre">PublicThreadedCommentManager</span></tt><a class="headerlink" href="#publicthreadedcommentmanager" title="Permalink to this headline">¶</a></h3>
+<p>This manager adds all of the aformentioned common methods onto the default
+manager, and then restricts all results to either be <tt class="docutils literal"><span class="pre">is_public</span> <span class="pre">=</span> <span class="pre">True</span></tt> or
+(by way of administrative override) <tt class="docutils literal"><span class="pre">is_approved</span> <span class="pre">=</span> <span class="pre">True</span></tt>.</p>
+<p>It can be used by using the <tt class="docutils literal"><span class="pre">public</span></tt> property on either <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>
+or <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>.  An example would be:</p>
+<div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">FreeThreadedComment</span><span class="o">.</span><span class="n">public</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+<span class="go">[&lt;FreeThreadedComment: This is a test.&gt;]</span>
+</pre></div>
+</div>
+</div>
+<div class="section">
+<h2 id="moderation">Moderation<a class="headerlink" href="#moderation" title="Permalink to this headline">¶</a></h2>
+<p>Moderation is how you are able to assign custom functionality to comments.
+Almost all moderation settings take place by registering moderator objects in
+lieu of Django settings.  This means that you may choose different options for
+comments on different pages, etc.</p>
+<p><em>threadedcomments</em> uses a customized version of _django-comment-utils for its
+comment moderation.  If you have used _django-comment-utils with the built-in
+<tt class="docutils literal"><span class="pre">django.contrib.comments</span></tt> application, you will find all of this very
+familiar.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution!</p>
+<p class="last">Prior to version 0.3, <em>threadedcomments</em> used a custom moderation system,
+however, due to a lack of robustness in the included implementation,
+django-comment-utils is now a required dependency.
+This is a backwards-incompatible change, so take care when upgrading to
+re-visit your old moderation code.</p>
+</div>
+<p>In <tt class="docutils literal"><span class="pre">threadedcomments.moderation</span></tt> there exists two items of note:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">CommentModerator</span></tt>, which subclasses <tt class="docutils literal"><span class="pre">comment_utils.CommentModerator</span></tt>.
+You can subclass this to provide moderation functionality for your content
+objects.</li>
+<li><tt class="docutils literal"><span class="pre">moderator</span></tt>, an instance of <tt class="docutils literal"><span class="pre">Moderator</span></tt>, which subclasses
+<tt class="docutils literal"><span class="pre">comment_utils.Moderator</span></tt>.  It is with this that you will register your
+<tt class="docutils literal"><span class="pre">CommentModerator</span></tt> objects.</li>
+</ol>
+<div class="section">
+<h3 id="additional-commentmoderator-properties">Additional <tt class="docutils literal"><span class="pre">CommentModerator</span></tt> Properties<a class="headerlink" href="#additional-commentmoderator-properties" title="Permalink to this headline">¶</a></h3>
+<p><tt class="docutils literal"><span class="pre">CommentModerator</span></tt> has many different properties, most of which are listed in
+the <a class="reference" href="http://django-comment-utils.googlecode.com/svn/trunk/docs/">django-comment-utils documentation</a>.  Listed below are the extra
+properties that can be set by using the <tt class="docutils literal"><span class="pre">CommentModerator</span></tt> provided by
+<em>threadedcomments</em>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">max_comment_length</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><p class="first">The maximum length of a comment, in characters.  Defaults to
+<tt class="docutils literal"><span class="pre">settings.DEFAULT_MAX_COMMENT_LENGTH</span></tt>.  If a comment goes beyond this
+length, the manager will set <tt class="docutils literal"><span class="pre">is_public</span> <span class="pre">=</span> <span class="pre">False</span></tt> before saving.</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">allowed_markup</span></tt>:</th><td class="field-body"><p class="first">A list of which markup types this manager will allow.  If a different
+markup is submitted, the manager will set <tt class="docutils literal"><span class="pre">is_public</span> <span class="pre">=</span> <span class="pre">False</span></tt> before
+saving.</p>
+<p>This list can be comprised of zero or more of the following imported
+constants:</p>
+<div class="highlight"><pre><span class="k">from</span> <span class="nn">threadedcomments.models</span> <span class="k">import</span> <span class="n">MARKDOWN</span><span class="p">,</span> <span class="n">TEXTILE</span><span class="p">,</span> <span class="n">REST</span><span class="p">,</span> <span class="n">PLAINTEXT</span>
+</pre></div>
+</td>
+</tr>
+<tr class="field"><th class="field-name">max_depth:</th><td class="field-body"><p class="first last">The maximum &#8220;depth&#8221; of a comment.  That is, it will take no more than
+max_depth parent relationship traversals to hit a comment with no parent.
+Defaults to <tt class="docutils literal"><span class="pre">settings.DEFAULT_MAX_COMMENT_DEPTH</span></tt>.  If a comment goes
+beyond this depth, the manager will set <tt class="docutils literal"><span class="pre">is_public</span> <span class="pre">=</span> <span class="pre">False</span></tt> before
+saving.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="model-manager-registration">Model-Manager Registration<a class="headerlink" href="#model-manager-registration" title="Permalink to this headline">¶</a></h3>
+<p>To register a manager with a model, first the moderator must be imported:</p>
+<div class="highlight"><pre><span class="k">from</span> <span class="nn">threadedcomments.moderation</span> <span class="k">import</span> <span class="n">moderator</span>
+</pre></div>
+<p>Then, the moderator has <tt class="docutils literal"><span class="pre">register</span></tt> and <tt class="docutils literal"><span class="pre">unregister</span></tt> functions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">register(model,</span> <span class="pre">moderator)</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Registers a model class with a manager or with the aformentioned keyword
+arguments.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">unregister(model)</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Unregisters the manager that&#8217;s currently associated with the given model.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>The following example will assume that a &#8220;BlogPost&#8221; model exists:</p>
+<div class="highlight"><pre><span class="k">class</span> <span class="nc">BlogPost</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mf">128</span><span class="p">)</span>
+    <span class="n">body</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">allows_comments</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+</pre></div>
+<p>Using <tt class="docutils literal"><span class="pre">CommentModerator</span></tt>:</p>
+<div class="highlight"><pre><span class="k">from</span> <span class="nn">threadedcomments.moderation</span> <span class="k">import</span> <span class="n">moderator</span><span class="p">,</span> <span class="n">CommentModerator</span>
+
+<span class="k">class</span> <span class="nc">BlogPostModerator</span><span class="p">(</span><span class="n">CommentModerator</span><span class="p">):</span>
+    <span class="n">akismet</span> <span class="o">=</span> <span class="bp">True</span>
+    <span class="n">enable_field</span> <span class="o">=</span> <span class="s">&#39;allows_comments&#39;</span>
+    <span class="n">max_depth</span> <span class="o">=</span> <span class="mf">5</span>
+
+<span class="n">moderator</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">BlogPost</span><span class="p">,</span> <span class="n">BlogPostModerator</span><span class="p">)</span>
+</pre></div>
+<p>What this has done is ensure that if allows_comments is set to false, all
+comments will be deleted.  Also, the maximum depth of the comment tree will
+be 5 comments deep.  Finally, each comment will be spam-checked by <a class="reference" href="http://akismet.com/">Akismet</a>.</p>
+</div>
+</div>
+<div class="section">
+<h2 id="template-helpers">Template Helpers<a class="headerlink" href="#template-helpers" title="Permalink to this headline">¶</a></h2>
+<p>While it&#8217;s possible to import the comment models and use them to query for the
+appropriate comments, sometimes it&#8217;s easier to do some of that manipulation
+in the template.  There are several tags and filters which will help to begin
+using <em>threadedcomments</em>.</p>
+<p>To use any of these tags or filters, first make sure to have &#8216;threadedcomments&#8217;
+listed in your <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt>, and then include the following in your
+template:</p>
+<pre>{% load threadedcommentstags %}</pre>
+<p>After &#8220;threadedcommentstags&#8221; has been loaded, all of the following become
+available.</p>
+<div class="section">
+<h3 id="tags">Tags<a class="headerlink" href="#tags" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_comment_url</span> <span class="pre">OBJECT</span> <span class="pre">[PARENT=None]</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the URL to post to for the given object and optional parent comment.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_comment_url_json</span> <span class="pre">OBJECT</span> <span class="pre">[PARENT=None]</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the URL to post to for the given object and optional parent comment,
+which will respond with JSON (useful for AJAX).</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_comment_url_xml</span> <span class="pre">OBJECT</span> <span class="pre">[PARENT=None]</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the URL to post to for the given object and optional parent comment,
+which will respond with XML (useful for AJAX).</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_free_comment_url</span> <span class="pre">OBJECT</span> <span class="pre">[PARENT=None]</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the URL to post to for the given object and optional parent free
+comment.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_free_comment_url_json</span> <span class="pre">OBJECT</span> <span class="pre">[PARENT=None]</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the URL to post to for the given object and optional parent free
+comment, which will respond with JSON (useful for AJAX).</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_free_comment_url_xml</span> <span class="pre">OBJECT</span> <span class="pre">[PARENT=None]</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the URL to post to for the given object and optional parent free
+comment, which will respond with XML (useful for AJAX).</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_comment_count</span> <span class="pre">for</span> <span class="pre">OBJECT</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Calls <tt class="docutils literal"><span class="pre">ThreadedComment.public.all_for_object(OBJECT).count()</span></tt> and places
+the result into the specified context variable.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_free_comment_count</span> <span class="pre">for</span> <span class="pre">OBJECT</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Calls <tt class="docutils literal"><span class="pre">FreeThreadedComment.public.all_for_object(OBJECT).count()</span></tt> and
+places the result into the specified context variable.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">auto_transform_markup</span> <span class="pre">COMMENT</span> <span class="pre">[as</span> <span class="pre">CONTEXT_VAR]</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Inspects the given comment and its markup, and either outputs it using the
+correct markup processor, or if a context variable is specified, outputs
+it into the context for further use.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_threaded_comment_tree</span> <span class="pre">for</span> <span class="pre">OBJECT</span> <span class="pre">[TREE_ROOT]</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Calls <tt class="docutils literal"><span class="pre">ThreadedComment.public.get_tree(OBJECT)</span></tt> and places the result
+into the specified context variable.  TREE_ROOT is an optional comment
+or comment_id, which would be the root of the tree.  This way, querying for
+a single thread of comments is made easy.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_free_threaded_comment_tree</span> <span class="pre">for</span> <span class="pre">OBJECT</span> <span class="pre">[TREE_ROOT]</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Calls <tt class="docutils literal"><span class="pre">FreeThreadedComment.public.get_tree(OBJECT)</span></tt> and places the result
+into the specified context variable.  TREE_ROOT is an optional comment
+or comment_id, which would be the root of the tree.  This way, querying for
+a single thread of comments is made easy.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_threaded_comment_form</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets an unbound <tt class="docutils literal"><span class="pre">ThreadedCommentForm</span></tt> and assigns it to the specified
+context variable.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_free_threaded_comment_form</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets an unbound <tt class="docutils literal"><span class="pre">FreeThreadedCommentForm</span></tt> and assigns it to the specified
+context variable.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_latest_comments</span> <span class="pre">NUM_TO_GET</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the <tt class="docutils literal"><span class="pre">NUM_TO_GET</span></tt> latest <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt> instances, ordered by
+<tt class="docutils literal"><span class="pre">date_submitted</span></tt> and assigns it to the specified context variable.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_latest_free_comments</span> <span class="pre">NUM_TO_GET</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the <tt class="docutils literal"><span class="pre">NUM_TO_GET</span></tt> latest <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> instances, ordered
+by <tt class="docutils literal"><span class="pre">date_submitted</span></tt> and assigns it to the specified context variable.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_user_comments</span> <span class="pre">for</span> <span class="pre">USERNAME</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the comments submitted by <tt class="docutils literal"><span class="pre">USERNAME</span></tt>, and assigns it to the specified
+context variable.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">get_user_comment_count</span> <span class="pre">for</span> <span class="pre">USERNAME</span> <span class="pre">as</span> <span class="pre">CONTEXT_VAR</span> <span class="pre">%}</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Gets the number of comments submitted by <tt class="docutils literal"><span class="pre">USERNAME</span></tt>, and assigns it to the
+specified context variable.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="filters">Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">oneline:</th><td class="field-body"><p class="first">Gets rid of all newlines and spaces in-between tags.  This is useful for
+calling when passing, for example, a form to javascript.  You could use it
+like so:</p>
+<pre>&lt;script type="text/javascript"&gt;
+    var form_html_fragment = '{{ form.as_ul|oneline }}';
+&lt;/script&gt;</pre>
+<p class="last">Now you could use that <tt class="docutils literal"><span class="pre">form_html_fragment</span></tt> Javascript variable to
+dynamically add or remove comment forms to the page.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="gravatar-support">Gravatar Support<a class="headerlink" href="#gravatar-support" title="Permalink to this headline">¶</a></h3>
+<p><em>threadedcomments</em> now has support built-in for <a class="reference" href="http://site.gravatar.com/">Gravatar</a>, the &#8220;globally
+recognized avatar&#8221; system provided by <a class="reference" href="http://automattic.com/">Automattic</a>.  To use this functionality,
+load the gravatar template tags in your template like so:</p>
+<pre>{% load gravatar %}</pre>
+<p>After the gravatar template library has been loaded, a new tag and filter
+become available.</p>
+<div class="section">
+<h4 id="gravatar-tag">Gravatar Tag<a class="headerlink" href="#gravatar-tag" title="Permalink to this headline">¶</a></h4>
+<p>Generates a gravatar image URL based on the given parameters.</p>
+<p>Format is as follows (The square brackets indicate that those arguments are
+optional.):</p>
+<pre>{% get_gravatar_url for emailvar [rating "R" size 80 default img:blank as contextvar] %}</pre>
+<p>Rating, size, and default may be either literal values or template variables.
+The template tag will attempt to resolve variables first, and on resolution
+failure it will use the literal value.</p>
+<p>If <tt class="docutils literal"><span class="pre">as</span></tt> is not specified, the URL will be output to the template in place.</p>
+<p>For all other arguments that are not specified, the appropriate default
+settings attribute will be used instead. See the <strong>Gravatar</strong> portion of the
+<a class="reference" href="#settings">Settings</a> section to see what those defaults are.</p>
+</div>
+<div class="section">
+<h4 id="gravatar-filter">Gravatar Filter<a class="headerlink" href="#gravatar-filter" title="Permalink to this headline">¶</a></h4>
+<p>Generates a gravatar image URL based on the email address string provided and
+settings or defaults.</p>
+<p>The best way to describe this filter is to show an example:</p>
+<pre>&lt;img src="{{ user.email|gravatar }}" alt="Gravatar for {{ user.get_full_name }}" /&gt;</pre>
+<p>In this example, we have a standard Django user object.  We&#8217;re using the e-mail
+address for that user to generate a gravatar image and the other attributes
+from that user to generate some alternate text for accessibility.</p>
+<p>The maximum rating, default image, and image size of this gravatar are a result
+of the gravatar-specific settings provided.  See the <strong>Gravatar</strong> portion of
+the <a class="reference" href="#settings">Settings</a> section to see what those settings are.</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 id="views">Views<a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h2>
+<p>There are three basic view types included with threadedcomments: <strong>create</strong>,
+<strong>edit</strong>, and <strong>delete</strong>.  The following are the URL names and what inputs they
+take.</p>
+<div class="section">
+<h3 id="create"><strong>Create</strong><a class="headerlink" href="#create" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">tc_comment</span></tt>:</th><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">content_type</span></tt>:</th><td class="field-body">The content type of the model to attach to.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">object_id</span></tt>:</th><td class="field-body">The primary key of the model to attach to.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_comment_parent</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">content_type</span></tt>:</th><td class="field-body">The content type of the model to attach to.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">object_id</span></tt>:</th><td class="field-body">The primary key of the model to attach to.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">parent_id</span></tt>:</th><td class="field-body">The primary key of the parent comment to which this comment is a
+response.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_comment_ajax</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">content_type</span></tt>:</th><td class="field-body">The content type of the model to attach to.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">object_id</span></tt>:</th><td class="field-body">The primary key of the model to attach to.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">ajax</span></tt>:</th><td class="field-body">&#8216;json&#8217; or &#8216;xml&#8217;, depending on the response type that is wanted.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_comment_parent_ajax</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">content_type</span></tt>:</th><td class="field-body">The content type of the model to attach to.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">object_id</span></tt>:</th><td class="field-body">The primary key of the model to attach to.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">parent_id</span></tt>:</th><td class="field-body">The primary key of the parent comment to which this comment is a
+response.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">ajax</span></tt>:</th><td class="field-body">&#8216;json&#8217; or &#8216;xml&#8217;, depending on the response type that is wanted.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_free_comment</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><p class="first">The same as <tt class="docutils literal"><span class="pre">tc_comment</span></tt>, only it deals with <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>
+model objects instead of <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt> objects.</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_free_comment_parent</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><p class="first">The same as <tt class="docutils literal"><span class="pre">tc_comment_parent</span></tt>, only it deals with
+<tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> model objects instead of <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>
+objects.</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_free_comment_ajax</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><p class="first">The same as <tt class="docutils literal"><span class="pre">tc_comment_ajax</span></tt>, only it deals with <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>
+model objects instead of <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt> objects.</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_free_comment_parent_ajax</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><p class="first last">The same as <tt class="docutils literal"><span class="pre">tc_comment_parent_ajax</span></tt>, only it deals with
+<tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> model objects instead of <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>
+objects.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="edit"><strong>Edit</strong><a class="headerlink" href="#edit" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_comment_edit</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">edit_id</span></tt>:</th><td class="field-body">The primary key of the comment that should be edited.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_comment_edit_ajax</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">edit_id</span></tt>:</th><td class="field-body">The primary key of the comment that should be edited.</td>
+</tr>
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">ajax</span></tt>:</th><td class="field-body">&#8216;json&#8217; or &#8216;xml&#8217;, depending on the response type that is wanted.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_free_comment_edit</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><p class="first">The same as <tt class="docutils literal"><span class="pre">tc_comment_edit</span></tt>, only it deals with <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>
+model objects instead of <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt> objects.</p>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_free_comment_edit_ajax</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><p class="first last">The same as <tt class="docutils literal"><span class="pre">tc_comment_edit_ajax</span></tt>, only it deals with
+<tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> model objects instead of <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>
+objects.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="delete"><strong>Delete</strong><a class="headerlink" href="#delete" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_comment_delete</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><table class="first docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">object_id</span></tt>:</th><td class="field-body">The primary key of the <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt> to delete.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">tc_free_comment_delete</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body"><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name"><tt class="docutils literal"><span class="pre">object_id</span></tt>:</th><td class="field-body">The primary key of the <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> to delete.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="previewing">Previewing<a class="headerlink" href="#previewing" title="Permalink to this headline">¶</a></h3>
+<p>If the key &#8216;preview&#8217; is inserted into any of the following views, a preview
+page (&#8216;threadedcomments/preview_comment.html&#8217;) will be shown:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">tc_comment</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tc_comment_parent</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tc_comment_edit</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tc_free_comment</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tc_free_comment_parent</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">tc_free_comment_edit</span></tt></li>
+</ul>
+<p>The context will be:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">next:</th><td class="field-body">The page to which the user should be redirected after successfully posting
+a comment.  This is usually to be used in a hidden input field in a form
+that tells the view where to go next.</td>
+</tr>
+<tr class="field"><th class="field-name">form:</th><td class="field-body">Either a <tt class="docutils literal"><span class="pre">FreeThreadedCommentForm</span></tt> or a <tt class="docutils literal"><span class="pre">ThreadedCommentForm</span></tt>,
+depending on the type of view.</td>
+</tr>
+<tr class="field"><th class="field-name">comment:</th><td class="field-body">If the parameters in POST validate correctly with the appropriate form, the
+unsaved comment will be passed in through this variable.</td>
+</tr>
+</tbody>
+</table>
+<p>If a GET request is sent to the <strong>Delete</strong> views, a confirmation/preview page
+(&#8216;threadedcomments/confirm_delete.html&#8217;) will be shown with context:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">comment:</th><td class="field-body">The comment object to be deleted.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">is_free_threaded_comment:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">True if comment to be deleted is a <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt>, and False
+otherwise.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">is_threaded_comment:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">True if comment to be deleted is a <tt class="docutils literal"><span class="pre">ThreadedComment</span></tt>, and False
+otherwise.</td>
+</tr>
+<tr class="field"><th class="field-name">next:</th><td class="field-body">The page to which the user should be redirected after successfully deleting
+a comment.  This is usually to be used in a hidden input field in a form
+that tells the view where to go next.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="redirection">Redirection<a class="headerlink" href="#redirection" title="Permalink to this headline">¶</a></h3>
+<p>After a comment is posted, choosing where to go next happens in this order:</p>
+<ol class="arabic simple">
+<li>If there exists a <tt class="docutils literal"><span class="pre">next</span></tt> variable in the POST data, it will redirect
+there.</li>
+<li>If there exists a <tt class="docutils literal"><span class="pre">next</span></tt> variable in the GET data, it will redirect there.</li>
+<li>If <tt class="docutils literal"><span class="pre">HTTP_REFERER</span></tt> exists in the request&#8217;s META information, it will
+redirect there&#8211;as long as it doesn&#8217;t create an infinite loop.</li>
+<li>It will raise an <tt class="docutils literal"><span class="pre">Http404</span></tt>.</li>
+</ol>
+</div>
+<div class="section">
+<h3 id="ajax">AJAX<a class="headerlink" href="#ajax" title="Permalink to this headline">¶</a></h3>
+<p><em>threadedcomments</em> provides a very basic AJAX implementation.  Upon POSTing to
+the view, it will return a JSON or an XML (as requested by URL) representation
+of the object just committed.  It&#8217;s up to you to dynamically
+insert its content into the comment thread.</p>
+</div>
+<div class="section">
+<h3 id="errors">Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h3>
+<p>If a view encounters an error (form validation being the most common case),
+then depending on whether the comment is being created using the JSON, XML, or
+plain HTML APIs, different things will occur.  If it&#8217;s using the JSON API, then
+it will return a JSON-formatted error string.  If it&#8217;s using XML, it will
+return an XML-formatted error string.  Otherwise, it will redirect the user to
+a preview page where he/she can edit the comment until it no longer has any
+errors.  At this point, the user will be redirected to the page to which they
+would have originally been redirected.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>When using <tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt> and after a comment is successfully
+saved, the successful <tt class="docutils literal"><span class="pre">name</span></tt>, <tt class="docutils literal"><span class="pre">website</span></tt>, and <tt class="docutils literal"><span class="pre">email</span></tt> fields will be
+placed into the session under the name <tt class="docutils literal"><span class="pre">successful_data</span></tt>.  To use this
+data for the next time a user visits the website, simply populate the
+initial data for a form with the <tt class="docutils literal"><span class="pre">successful_data</span></tt> dict.</p>
+<p>For example:</p>
+<div class="highlight"><pre><span class="n">successful_data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;successful_data&#39;</span><span class="p">,</span> <span class="p">{})</span>
+<span class="n">form</span> <span class="o">=</span> <span class="n">FreeThreadedCommentForm</span><span class="p">(</span><span class="n">initial</span> <span class="o">=</span> <span class="n">successful_data</span><span class="p">)</span>
+</pre></div>
+<p class="last">Now that form will have the user&#8217;s simple data prepopulated.  It&#8217;s that
+easy!</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h2 id="forms">Forms<a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h2>
+<p><em>threadedcomments</em> provides two basic forms that you can use and/or subclass
+to suit your needs: <tt class="docutils literal"><span class="pre">ThreadedCommentForm</span></tt>, and <tt class="docutils literal"><span class="pre">FreeThreadedCommentForm</span></tt>.</p>
+<div class="section">
+<h3 id="threadedcommentform"><tt class="docutils literal"><span class="pre">ThreadedCommentForm</span></tt><a class="headerlink" href="#threadedcommentform" title="Permalink to this headline">¶</a></h3>
+<p>Simply includes two fields: comment, and markup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">comment:</th><td class="field-body"><strong>required</strong> The content of the comment.</td>
+</tr>
+<tr class="field"><th class="field-name">markup:</th><td class="field-body"><strong>required</strong> The type of markup that the comment is using.  This may be
+easily overridden in a subclass to become a <tt class="docutils literal"><span class="pre">HiddenInput</span></tt>, if the user is
+not to be given a choice of markup options.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="freethreadedcommentform"><tt class="docutils literal"><span class="pre">FreeThreadedCommentForm</span></tt><a class="headerlink" href="#freethreadedcommentform" title="Permalink to this headline">¶</a></h3>
+<p>Includes a few fields: comment, name, website, email, and markup.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">comment:</th><td class="field-body"><strong>required</strong> The content of the comment.</td>
+</tr>
+<tr class="field"><th class="field-name">name:</th><td class="field-body"><strong>required</strong> The name of the person</td>
+</tr>
+<tr class="field"><th class="field-name">website:</th><td class="field-body">A website for the commenter, if he or she has one to list.</td>
+</tr>
+<tr class="field"><th class="field-name">email:</th><td class="field-body">An e-mail address where the person leaving the comment can be reached.</td>
+</tr>
+<tr class="field"><th class="field-name">markup:</th><td class="field-body"><strong>required</strong> The type of markup that the comment is using.  This may be
+esaily overridden in a subclass to become a <tt class="docutils literal"><span class="pre">HiddenInput</span></tt>, if the user is
+not to be given a choice of markup options.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section">
+<h2 id="settings">Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<p>Most of the configuration will be done via the use of the <a class="reference" href="#moderation">Moderation</a> features
+of <em>threadedcomments</em> itself, but there are a few settings that you might want
+or need to apply globally in the settings file.</p>
+<div class="section">
+<h3 id="general">General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">AKISMET_API_KEY</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Your API key for Akismet.  This will only be needed if you enable Akismet
+moderation of comments on one or more of your models.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">DEFAULT_MAX_COMMENT_LENGTH</span> <span class="pre">=</span> <span class="pre">1000</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The default max_length that the comment forms should validate against
+if an override isn&#8217;t specified in per-model moderation.  If this isn&#8217;t
+specified, then a default DEFAULT_MAX_COMMENT_LENGTH of 1000 is used.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">DEFAULT_MAX_COMMENT_DEPTH</span> <span class="pre">=</span> <span class="pre">8</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The default max_depth that the moderation should validate against if it
+isn&#8217;t explicitly defined in the moderator.  Keep in mind that if no
+moderator is registered against a model, this default depth will not be
+adhered to either.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">DEFAULT_MARKUP</span> <span class="pre">=</span> <span class="pre">PLAINTEXT</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Every comment which is added to any object has not only some text, but that
+text may be stored in some markup language like restructured text or
+textile.  If this information is not provided to the form, then the comment
+will fall back to a default of whatever is specified here.  The default is
+<tt class="docutils literal"><span class="pre">PLAINTEXT</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section">
+<h3 id="id1">Gravatar<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">GRAVATAR_MAX_RATING</span> <span class="pre">=</span> <span class="pre">&quot;R&quot;</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The default maximum rating to display for gravatars.  Can be &#8220;G&#8221;, &#8220;PG&#8221;,
+&#8220;R&#8221;, or &#8220;X&#8221;.</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>:<tt class="docutils literal"><span class="pre">GRAVATAR_DEFAULT_IMG</span> <span class="pre">=</span> <span class="pre">&quot;img:blank&quot;</span></tt>:</dt>
+<dd>The full URL to the default image if a gravatar image is not found.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2"><tt class="docutils literal"><span class="pre">GRAVATAR_SIZE</span> <span class="pre">=</span> <span class="pre">80</span></tt>:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The size in which the gravatar should be displayed.  Values may be from 1
+to 80, inclusive.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section">
+<h2 id="more">More<a class="headerlink" href="#more" title="Permalink to this headline">¶</a></h2>
+<p>This is as good as it gets for now.  Until more documentation is posted, check
+out <a class="reference" href="http://api.rst2a.com/1.0/rst2/html?uri=http%3A//django-threadedcomments.googlecode.com/svn/trunk/docs/tutorial.txt&amp;style=zope">Tutorial 1</a>.  Beyond that, there&#8217;s fairly extensive in-line
+documentation, so you can <a class="reference" href="http://django-threadedcomments.googlecode.com/svn/trunk/">browse the source code</a>.  If you&#8217;re the kind of
+person who likes to scan doctests, you can check the tests out <a class="reference" href="http://django-threadedcomments.googlecode.com/svn/trunk/threadedcomments/tests.py">here</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3>Table Of Contents</h3>
+            <ul>
+<li><a class="reference" href="">threadedcomments API Documentation</a><ul>
+<li><a class="reference" href="#models">Models</a><ul>
+<li><a class="reference" href="#common-fields">Common Fields</a></li>
+<li><a class="reference" href="#threadedcomment"><tt class="docutils literal"><span class="pre">ThreadedComment</span></tt></a></li>
+<li><a class="reference" href="#freethreadedcomment"><tt class="docutils literal"><span class="pre">FreeThreadedComment</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference" href="#custom-managers">Custom Managers</a><ul>
+<li><a class="reference" href="#common-methods">Common Methods</a></li>
+<li><a class="reference" href="#threadedcommentmanager"><tt class="docutils literal"><span class="pre">ThreadedCommentManager</span></tt></a></li>
+<li><a class="reference" href="#publicthreadedcommentmanager"><tt class="docutils literal"><span class="pre">PublicThreadedCommentManager</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference" href="#moderation">Moderation</a><ul>
+<li><a class="reference" href="#additional-commentmoderator-properties">Additional <tt class="docutils literal"><span class="pre">CommentModerator</span></tt> Properties</a></li>
+<li><a class="reference" href="#model-manager-registration">Model-Manager Registration</a></li>
+<li><a class="reference" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#template-helpers">Template Helpers</a><ul>
+<li><a class="reference" href="#tags">Tags</a></li>
+<li><a class="reference" href="#filters">Filters</a></li>
+<li><a class="reference" href="#gravatar-support">Gravatar Support</a><ul>
+<li><a class="reference" href="#gravatar-tag">Gravatar Tag</a></li>
+<li><a class="reference" href="#gravatar-filter">Gravatar Filter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference" href="#views">Views</a><ul>
+<li><a class="reference" href="#create"><strong>Create</strong></a></li>
+<li><a class="reference" href="#edit"><strong>Edit</strong></a></li>
+<li><a class="reference" href="#delete"><strong>Delete</strong></a></li>
+<li><a class="reference" href="#previewing">Previewing</a></li>
+<li><a class="reference" href="#redirection">Redirection</a></li>
+<li><a class="reference" href="#ajax">AJAX</a></li>
+<li><a class="reference" href="#errors">Errors</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#forms">Forms</a><ul>
+<li><a class="reference" href="#threadedcommentform"><tt class="docutils literal"><span class="pre">ThreadedCommentForm</span></tt></a></li>
+<li><a class="reference" href="#freethreadedcommentform"><tt class="docutils literal"><span class="pre">FreeThreadedCommentForm</span></tt></a></li>
+</ul>
+</li>
+<li><a class="reference" href="#settings">Settings</a><ul>
+<li><a class="reference" href="#general">General</a></li>
+<li><a class="reference" href="#id1">Gravatar</a></li>
+</ul>
+</li>
+<li><a class="reference" href="#more">More</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter">django-threadedcomments</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tutorial.html" title="next chapter">Tutorial 1</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/external/threadedcomments/api.txt">Show Source</a></li>
+            </ul>
+            <h3>Quick search</h3>
+            <form class="search" action="../../search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="tutorial.html" title="Tutorial 1"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-threadedcomments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Pinax v0.5.0 documentation</a> &raquo;</li>
+          <li><a href="../../external_apps.html" accesskey="U">External Apps</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">django-threadedcomments</a> &raquo;</li>
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, James Tauber and Pinax Team.
+      Last updated on Oct 23, 2008.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

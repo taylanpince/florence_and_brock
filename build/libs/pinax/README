@@ -1,0 +1,44 @@
+pinax: a platform for rapidly developing websites
+http://pinaxproject.com/
+
+Pinax is an open-source collection of re-usable apps for the Django Web
+Framework.
+
+By integrating numerous reusable Django apps to take care of the things
+that many sites have in common, it lets you focus on what makes your
+site different.
+
+While our initial development is focused around a demo social
+networking site, we are also working on number of editions tailored to
+intranets, learning management, software project management and more.
+
+If you have any questions about the Pinax project, please contact
+James Tauber <jtauber@jtauber.com> or join us on the #pinax IRC channel
+on freenode or the pinax-users mailing list on Google Groups.
+
+
+DIRECTORY STRUCTURE
+
+projects/
+    complete_project/   a complete sample project and templates
+    basic_project/      a more basic starter project
+apps/
+    external_apps/      external re-usable apps via svn:externals
+    local_apps/         re-usable apps that aren't yet externalized
+libs/
+    external_libs/      contains external libraries
+docs/                   documentation (using rst and sphinx; in progress)
+fixtures/               test fixtures (in progress)
+
+The photologue app requires PIL which is not included in external_libs
+
+There is some path manipulation in manage.py to get this all to work. You'll
+need to do something similar in your wsgi or mod_python configuration.
+
+Note that if you already have an external app or external lib on the path,
+you don't need to use the one we provide.
+
+
+With the exception of photos, things should just work out of the box. You can
+cd into projects/complete_project/ or projects/basic_project/ and
+run ./manage.py syncdb and ./manage.py runserver to get running immediately.
