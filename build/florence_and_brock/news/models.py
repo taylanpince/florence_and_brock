@@ -10,7 +10,7 @@ from news.managers import PublishedManager, HomePageManager, NewsListingManager
 class NewsItem(models.Model):
     publication_status = models.PositiveSmallIntegerField(_('publication status'),
             choices=PUBLICATION_STATUS, default=NEWS_LISTING)
-    pub_date = models.DateTimeField(_('pub_date'), default=datetime.now)
+    pub_date = models.DateTimeField(_('publication date'), default=datetime.now)
     title = models.CharField(_('title'), max_length=200)
     slug = models.SlugField(max_length=100, unique_for_month="pub_date")
     teaser = models.TextField(_('teaser'))
