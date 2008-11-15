@@ -11,8 +11,8 @@ class Issue(models.Model):
     creation_date = models.DateTimeField(_('creation date'), default=datetime.datetime.now)
 
     class Meta:
-        verbose_name = _('poll')
-        verbose_name_plural = _('polls')
+        verbose_name = _('issue')
+        verbose_name_plural = _('issues')
 
     def __unicode__(self):
         return self.name
