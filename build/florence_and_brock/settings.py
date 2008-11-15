@@ -53,6 +53,10 @@ INSTALLED_APPS = (
 
     'django_evolution',
     'django_extensions',
+
+    'polls',
+    'houses',
+    'residents',
 )
 
 try:
