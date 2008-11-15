@@ -1,0 +1,328 @@
+Index: sorl/thumbnail/models.py
+===================================================================
+--- sorl.orig/thumbnail/models.py	2008-04-12 05:59:29.000000000 -0400
++++ sorl/thumbnail/models.py	2008-11-14 17:31:13.000000000 -0500
+@@ -1 +1,47 @@
+-# Needs a models.py file so that tests are picked up.
+\ No newline at end of file
++# Needs a models.py file so that tests are picked up.
++import os.path
++
++from django.db import models
++from django.conf import settings
++
++from sorl.thumbnail.main import DjangoThumbnail
++from sorl.thumbnail.utils import delete_thumbnails
++from sorl.thumbnail.main import get_thumbnail_setting
++
++
++class ImageHelper(object):
++    """
++    Provide helpers method to deal with class containing an ImageField.
++    To use this helper in a Model class you need to multiple inherit from it
++    and put ImageHelper before models.Model.
++    ex : class Something(ImageHelper, models.Model)
++    If your image field is not named 'image' you also need to override image_field.
++    You can change the size of the thumbnail in the admin by overriding thumb_width
++    and thumb_height.
++    """
++    thumb_width = 100
++    thumb_height = 100
++    image_field = 'image'
++
++    def save(self, force_insert=False, force_update=False):
++        if self.__dict__[self.image_field]:
++            DjangoThumbnail(getattr(self, self.image_field), (self.thumb_width, self.thumb_height),
++                    opts=['crop'])
++        models.Model.save(self, force_insert, force_update)
++
++    def delete(self):
++        delete_thumbnails(getattr(self, self.image_field))
++        models.Model.delete(self)
++
++    def thumb_size(self):
++        return '%sx%s' % (self.thumb_width, self.thumb_height)
++
++    def _image_repr(self):
++        return '<img src="%s_%sx%s_crop_q%s.jpg" />' % (
++            os.path.join(settings.MEDIA_URL, self.__dict__[self.image_field].replace('.', '_')),
++            self.thumb_width, self.thumb_height,
++            get_thumbnail_setting('QUALITY'))
++    _image_repr.short_description = "Image"
++    _image_repr.allow_tags = True
++
++
+Index: sorl/.svn/entries
+===================================================================
+--- sorl.orig/.svn/entries	2008-11-14 17:27:51.000000000 -0500
++++ sorl/.svn/entries	2008-11-14 11:31:59.000000000 -0500
+@@ -2,7 +2,7 @@
+ 
+ dir
+ 130
+-svn://office.trapeze.com/Parlour/trunk/build/site/parlour/sorl/.pc/imagehelper.diff
++svn://office.trapeze.com/Parlour/trunk/build/site/parlour/sorl
+ svn://office.trapeze.com/Parlour
+ 
+ 
+@@ -13,19 +13,38 @@
+ 
+ 
+ svn:special svn:externals svn:needs-lock
++
++
++
++
++
++
++
++
++
++
++
++4562e53e-d10a-d54c-b3ae-cb44414a5131
++
++.pc
++dir
+ 
+-.timestamp
++thumbnail
++dir
++
++__init__.py
+ file
+ 
+ 
+ 
+ 
+-2008-11-14T22:26:07.000000Z
++2008-04-12T09:59:29.000000Z
+ d41d8cd98f00b204e9800998ecf8427e
+-2008-11-13T22:47:45.906625Z
+-126
++2008-11-13T16:22:08.877750Z
++108
+ stoe
++has-props
+ 
+-thumbnail
++patches
+ dir
+ 
+Index: sorl/thumbnail/.svn/entries
+===================================================================
+--- sorl.orig/thumbnail/.svn/entries	2008-11-14 11:31:59.000000000 -0500
++++ sorl/thumbnail/.svn/entries	2008-11-14 17:28:56.000000000 -0500
+@@ -2,7 +2,7 @@
+ 
+ dir
+ 130
+-svn://office.trapeze.com/Parlour/trunk/build/site/parlour/sorl/.pc/imagehelper.diff/thumbnail
++svn://office.trapeze.com/Parlour/trunk/build/site/parlour/sorl/thumbnail
+ svn://office.trapeze.com/Parlour
+ 
+ 
+@@ -13,16 +13,146 @@
+ 
+ 
+ svn:special svn:externals svn:needs-lock
++
++
++
++
++
++
++
++
++
++
++
++4562e53e-d10a-d54c-b3ae-cb44414a5131
++
++LICENSE.TXT
++file
++
++
++
++
++2008-08-15T19:11:04.000000Z
++628d5ba7d86d27ed894c209f28f5e981
++2008-11-13T16:22:08.877750Z
++108
++stoe
++
++base.py
++file
++
++
++
++
++2008-05-19T02:37:16.000000Z
++b45e9e2f53db2e3c693c9557c95d92c5
++2008-11-13T16:22:08.877750Z
++108
++stoe
++has-props
++
++tests
++dir
++
++__init__.py
++file
++
++
++
++
++2008-04-12T09:59:29.000000Z
++d41d8cd98f00b204e9800998ecf8427e
++2008-11-13T16:22:08.877750Z
++108
++stoe
++
++utils.py
++file
++
++
++
++
++2008-10-13T21:55:15.000000Z
++9f53f6f2f0614e8af19ff9928e925c3b
++2008-11-13T16:22:08.877750Z
++108
++stoe
++
++bin
++dir
++
++processors.py
++file
++
++
++
++
++2008-04-12T09:59:29.000000Z
++6ca52e97e9a7146affba816d3205f8f9
++2008-11-13T16:22:08.877750Z
++108
++stoe
+ 
+ models.py
+ file
++139
++
++
++
++2008-11-14T22:25:41.000000Z
++b31698d9a9147ad54e6d235cccb0b951
++2008-11-14T22:28:56.442000Z
++139
++stoe
++
++templatetags
++dir
++
++main.py
++file
++
++
++
++
++2008-09-08T12:49:43.000000Z
++d7a348a7be27595854dd8a9be2f717a8
++2008-11-13T16:22:08.877750Z
++108
++stoe
++
++README.TXT
++file
++
++
++
++
++2008-10-15T01:44:57.000000Z
++48d1f12454b71b109303592770ed3fcb
++2008-11-13T16:22:08.877750Z
++108
++stoe
++
++fields.py
++file
++
++
++
++
++2008-11-09T21:21:43.000000Z
++50418908000423fd8dee26366cdd16b5
++2008-11-13T16:22:08.877750Z
++108
++stoe
++
++defaults.py
++file
+ 
+ 
+ 
+ 
+ 2008-04-12T09:59:29.000000Z
+-f1f0e841bd2a36833140402c8dfac0e2
+-2008-11-13T22:47:45.906625Z
+-126
++a2ed5ac53127025ebba801bf4b872948
++2008-11-13T16:22:08.877750Z
++108
+ stoe
+ 
+Index: sorl/thumbnail/.svn/text-base/models.py.svn-base
+===================================================================
+--- sorl.orig/thumbnail/.svn/text-base/models.py.svn-base	2008-04-12 05:59:29.000000000 -0400
++++ sorl/thumbnail/.svn/text-base/models.py.svn-base	2008-11-14 17:25:41.000000000 -0500
+@@ -1 +1,47 @@
+-# Needs a models.py file so that tests are picked up.
+\ No newline at end of file
++# Needs a models.py file so that tests are picked up.
++import os.path
++
++from django.db import models
++from django.conf import settings
++
++from sorl.thumbnail.main import DjangoThumbnail
++from sorl.thumbnail.utils import delete_thumbnails
++from sorl.thumbnail.main import get_thumbnail_setting
++
++
++class ImageHelper(object):
++    """
++    Provide helpers method to deal with class containing an ImageField.
++    To use this helper in a Model class you need to multiple inherit from it
++    and put ImageHelper before models.Model.
++    ex : class Something(ImageHelper, models.Model)
++    If your image field is not named 'image' you also need to override image_field.
++    You can change the size of the thumbnail in the admin by overriding thumb_width
++    and thumb_height.
++    """
++    thumb_width = 100
++    thumb_height = 100
++    image_field = 'image'
++
++    def save(self, force_insert=False, force_update=False):
++        if self.__dict__[self.image_field]:
++            DjangoThumbnail(getattr(self, self.image_field), (self.thumb_width, self.thumb_height),
++                    opts=['crop'])
++        models.Model.save(self, force_insert, force_update):
++
++    def delete(self):
++        delete_thumbnails(getattr(self, self.image_field))
++        models.Model.delete(self)
++
++    def thumb_size(self):
++        return '%sx%s' % (self.thumb_width, self.thumb_height)
++
++    def _image_repr(self):
++        return '<img src="%s_%sx%s_crop_q%s.jpg" />' % (
++            os.path.join(settings.MEDIA_URL, self.__dict__[self.image_field].replace('.', '_')),
++            self.thumb_width, self.thumb_height,
++            get_thumbnail_setting('QUALITY'))
++    _image_repr.short_description = "Image"
++    _image_repr.allow_tags = True
++
++
