@@ -69,7 +69,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'sorl.thumbnail',
 
-    'polls',
+    'decisions',
     'houses',
     'residents',
     'pagination',
