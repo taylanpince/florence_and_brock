@@ -59,13 +59,18 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.markup',
 
     'django_evolution',
     'django_extensions',
+    'sorl.thumbnail',
 
     'polls',
     'houses',
     'residents',
+    'pagination',
+    'documents',
+    'news',
 )
 
 try:
