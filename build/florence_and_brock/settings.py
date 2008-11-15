@@ -50,11 +50,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.admin',
-    
+
     'django_evolution',
     'django_extensions',
-    
-    
 )
 
 try:
