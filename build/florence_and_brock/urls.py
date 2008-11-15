@@ -11,8 +11,6 @@ home_dict = {
 }
 
 urlpatterns = patterns('',
-    (r'^$', 'categorized_blog.views.categorized_posts', home_dict),
-    (r'^blog/', include('blog.urls')),
 
     # Admin
     (r'^admin/(.*)', admin.site.root),
