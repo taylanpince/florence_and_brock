@@ -1,0 +1,12 @@
+{% extends "news/newsitem_content.html" %}
+
+{% load thumbnail %}
+{% load markup %}
+
+{% block newsitem-image %}
+<img src="{% thumbnail newsitem.image 100x100 %}" alt="Temporary Image" class="thumbnail" />
+{% endblock %}
+{% block newsitem-text %}
+{{ newsitem.teaser|markdown }}
+{% endblock %}
+
