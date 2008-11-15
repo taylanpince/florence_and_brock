@@ -27,6 +27,10 @@ ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
 
 SECRET_KEY = 'b_n_3$(b+5_h1c@cu!dp2xa92bvshzjs*z1ytcrdkmifo=^diq'
 
+AUTHENTICATION_BACKENDS = (
+    'residents.backends.ResidentUserBackend',
+)
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
