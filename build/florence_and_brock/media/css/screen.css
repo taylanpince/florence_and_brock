@@ -341,3 +341,25 @@ textarea {
 }
 
 /* @end */
+
+
+/* @group pagination */
+
+.pagination {
+    text-align: center;
+}
+.pagination li {
+    font-family: arial, verdana, sans-serif;
+    font-size: 11px;
+    display: inline;
+}
+.pagination a {
+    padding: 0 4px;
+}
+
+.pagination a.active {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* @end */
