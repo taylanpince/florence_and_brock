@@ -1,0 +1,22 @@
+{% load markup %}
+{% load thumbnail %}
+
+<h2><a href="{{ newsitem.get_absolute_url }}">{{ newsitem.title }}</a></h2>
+    <p class="post-info">Posted by {{ newsitem.author }} on {{ newsitem.pub_date|date:"M d, Y" }}
+    {% if newsitem.documents.all %}
+    [{% for document in newsitem.documents.all %}
+    <a href="{{ MEDIA_URL }}{{ document.file }}">view {{ document }}</a>{% if not forloop.last %},{% endif %}
+    {% endfor %}
+    ]
+    {% endif %}
+    </p>
+
+{% if newsitem.image %}
+{% block newsitem-image %}
+<img src="{% thumbnail newsitem.image 300x300 %}" alt="Temporary Image" class="thumbnail" />
+{% endblock %}
+{% endif %}
+{% block newsitem-text %}
+{{ newsitem.body|markdown }}
+{% endblock %}
+
