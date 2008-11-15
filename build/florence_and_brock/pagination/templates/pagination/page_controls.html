@@ -1,0 +1,19 @@
+{% if page_obj.has_other_pages %}
+<ul class="pagination">
+  <li><a href="{{ base_url }}{{ page_var }}=1">&laquo;&#160;first</a></li>
+  <li><a href="{% if page_obj.has_previous %}{{ base_url }}{{ page_var }}={{ page_obj.previous_page_number }}{% else %}{{ base_url }}{{ page_var }}=1{% endif %}">&lsaquo;&#160;prev</a></li>
+  {% for page in page_range %}
+  {% ifequal page DOT %}
+  <li>&#0133;</li>
+  {% else %}
+  {% ifequal page page_obj.number %}
+  <li>{{ page }}</li>
+  {% else %}
+  <li><a href="{{ base_url }}{{ page_var }}={{ page }}">{{ page }}</a></li>
+  {% endifequal %}
+  {% endifequal %}
+  {% endfor %}
+  <li><a href="{% if page_obj.has_next %}{{ base_url }}{{ page_var }}={{ page_obj.next_page_number }}{% else %}{{ base_url }}{{ page_var }}={{ paginator.num_pages }}{% endif %}">next&#160;&rsaquo;</a></li>
+  <li><a href="{{ base_url }}{{ page_var }}={{ paginator.num_pages }}">last&#160;&raquo;</a></li>
+</ul>
+{% endif %}

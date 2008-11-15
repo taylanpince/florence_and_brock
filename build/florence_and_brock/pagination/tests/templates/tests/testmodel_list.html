@@ -1,0 +1,9 @@
+{% load pagination_tools %}
+
+<ul>
+{% for object in object_list %}
+    <li>{{ object }}</li>
+{% endfor %}
+</ul>
+
+{% page_controls %}
