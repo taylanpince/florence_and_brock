@@ -5,11 +5,27 @@ from news.models import NewsItem
 from news.settings import NEWS_PAGINATE_BY
 
 
+def home(request):
+    newsitem = NewsItem.home_objects.all()[0]
+    return simple.direct_to_template(request,
+            template="news/home.html",
+            extra_context=locals())
+
+
 def newsitem_list(request):
     qs = NewsItem.objects.all()
     return list_detail.object_list(request, qs,
             paginate_by=NEWS_PAGINATE_BY,
             template_name='news/newsitem_list.html',
+            template_object_name='newsitem',
+            )
+
+
+def newsitem_archive(request):
+    qs = NewsItem.archive_objects.all()
+    return list_detail.object_list(request, qs,
+            paginate_by=NEWS_PAGINATE_BY,
+            template_name='news/newsitem_archive.html',
             template_object_name='newsitem',
             )
 

@@ -215,6 +215,23 @@ bottom: 0em;
 padding: 0em 2.0em 1.3em 2.0em;
 }
 
+#loginsection
+{position: absolute;
+top: 5em;
+left: 30em;
+bottom: 0em;
+padding: 0em 2.0em 1.3em 2.0em;
+}
+
+#loginsubmit
+{
+position: absolute;
+top: 5.5em;
+right: 2.0em;
+padding-right: 0.0em;
+}
+
+
 #headercontent h1
 {
 font-weight: normal;
@@ -241,6 +258,25 @@ top: 5.5em;
 right: 2.0em;
 padding-right: 0.0em;
 }
+
+div.Container {
+   width: 500px;
+   margin: 60px auto 20px auto;
+   min-width: inherit;
+   color: #666;
+}
+
+#Dialog input {font-size: 20px;}
+div.Container input {font-size: 20px;}
+
+#Dialog table {padding: 5px;}
+#Dialog table td {font-size: 20px;}
+
+
+a {color: #0033bb;}
+
+
+input[type="text"]:hover, input[type="password"]:focus { background-color: #FFC; border-color: #666; }
 
 #search input.text
 {

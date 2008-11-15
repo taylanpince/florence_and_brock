@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block menu_home %}active{% endblock %}
+
+{% block header1 %}<strong>Florence and Brock:</strong> <span>Welcome to the new website!</span>{% endblock %}
+
+{% block left-column %}
+{% include "news/newsitem_content.html" %}
+{% endblock left-column %}
