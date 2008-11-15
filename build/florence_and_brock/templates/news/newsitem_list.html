@@ -1,0 +1,27 @@
+{% extends 'news/base.html' %}
+
+{% load markup %}
+{% load thumbnail %}
+{% load pagination_tools %}
+
+
+{% block left-column %}
+{% if newsitem_list %}
+<ul id="PostList">
+    {% for newsitem in newsitem_list %}
+    <li>
+    <h2><a href="{{ newsitem.get_absolute_url }}">{{ newsitem.title }}</a></h2>
+        <p class="post-info">Posted by {{ newsitem.author }} on {{ newsitem.pub_date|date:"M d, Y" }}</p>
+
+        {% if newsitem.image %}
+        <img src="{% thumbnail newsitem.image 100x100 %}" alt="Temporary Image" class="thumbnail" />
+        {% endif %}
+        {{ newsitem.teaser|markdown }}
+    {% endfor %}
+</ul>
+{% else %}
+<p>No news found.</p>
+{% endif %}
+
+{% page_controls %}
+{% endblock left-column %}
