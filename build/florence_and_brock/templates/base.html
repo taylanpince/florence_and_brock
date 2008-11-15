@@ -56,7 +56,7 @@
             <ul id="Navigation">
                 <li class="{% block menu_home %}{% endblock %}"><a href="{% url home %}">Home</a></li>
                 <li class="{% block menu_news %}{% endblock %}"><a href="{% url newsitem_list %}">News</a></li>
-                <li class="{% block menu_archive %}{% endblock %}"><a href="">Archive</a></li>
+                <li class="{% block menu_archive %}{% endblock %}"><a href="{% url newsitem_archive %}">Archive</a></li>
                 <li class="{% block menu_contact %}{% endblock %}"><a href="">Contacts</a></li>
             </ul>
 

@@ -21,6 +21,15 @@ def newsitem_list(request):
             )
 
 
+def newsitem_archive(request):
+    qs = NewsItem.archive_objects.all()
+    return list_detail.object_list(request, qs,
+            paginate_by=NEWS_PAGINATE_BY,
+            template_name='news/newsitem_archive.html',
+            template_object_name='newsitem',
+            )
+
+
 def detail(request, year, month, slug):
     year = int(year)
     month = int(month)
