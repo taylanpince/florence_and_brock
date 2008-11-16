@@ -1,0 +1,440 @@
+/*
+ *	Title: Screen CSS Styles for Florence & Brock
+ *	Date: October 25, 2008
+ *  Author: Taylan Pince (taylanpince at gmail dot com)
+ */
+
+
+/* @group Global */
+
+body {
+    color: #333;
+    font: 13px Helvetica, Arial, sans-serif;
+    background: #FFF url("../images/bg-body.jpg") top left repeat;
+}
+
+#Wrapper {
+    padding: 35px 0px 40px 0px;
+    background: transparent url("../images/bg-body-top.jpg") top left repeat-x;
+}
+
+/* @end */
+
+
+/* @group Layout */
+
+#Container {
+    width: 886px;
+    margin: 0px auto 0px auto;
+    padding: 7px;
+    background-color: #FFF;
+}
+
+#Content {
+    margin: 2px 0px 0px 0px;
+    padding: 30px 25px 10px 25px;
+    background: transparent url("../images/bg-content.gif") top left repeat-x;
+}
+
+#Columns {
+    width: 836px;
+    overflow: hidden;
+    position: static;
+    padding: 30px 0px 0px 0px;
+    background: transparent url("../images/bg-columns.gif") top left repeat-x;
+}
+
+#LeftColumn {
+    float: left;
+    display: inline;
+    width: 556px;
+    padding: 20px 0px 0px 0px;
+    margin: 0px 30px 0px 0px;
+}
+
+#RightColumn {
+    float: left;
+    display: inline;
+    width: 250px;
+}
+
+/* @end */
+
+
+/* @group Header */
+
+#Header {
+    padding: 40px 25px 15px 25px;
+    background: transparent url("../images/bg-header.gif") top left repeat;
+}
+
+#HeaderTitle {
+    color: #FFF;
+    font: 36px Georgia, "Times New Roman", serif;
+}
+
+#HeaderSubTitle {
+    color: #AAA;
+    font-size: 13px;
+}
+
+#SearchForm {
+    float: right;
+    width: 220px;
+    margin: 30px 0px 0px 0px;
+}
+
+#SearchForm input.text {
+    float: left;
+    display: inline;
+    width: 154px;
+    height: 18px;
+    padding: 2px;
+    margin: 0px 10px 0px 0px;
+    border: 1px solid #CCC;
+    font-size: 13px;
+}
+
+#SearchForm input.submit {
+    float: left;
+    display: inline;
+    width: 50px;
+    height: 24px;
+    font-size: 11px;
+    color: #F2F3DE;
+    font-weight: bold;
+    background: #939B00 url("../media/images/bg-button.gif") top left repeat-x;
+    border: 1px solid #5F6800;
+}
+
+/* @end */
+
+
+/* @group Navigation */
+
+#Navigation {
+    overflow: hidden;
+    position static;
+    width: 846px;
+    padding: 10px 25px 10px 15px;
+    background: transparent url("../images/bg-nav.gif") top left repeat;
+}
+
+#Navigation li {
+    float: left;
+    display: inline;
+    padding: 5px 10px 9px 10px;
+    margin: 0px 10px 0px 0px;
+}
+
+#Navigation li.active {
+    background: transparent url("../images/bg-nav-active.gif") top left repeat-x;
+}
+
+#Navigation li a {
+    color: #FFF;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+#Navigation li a:hover {
+    text-decoration: underline;
+}
+
+/* @end */
+
+
+/* @group Post List */
+
+#PostList li {
+    padding: 0px 0px 5px 0px;
+    margin: 0px 0px 20px 0px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+#PostList li.last-child {
+    padding: 0px;
+    border: none;
+}
+
+#PostList li h2 {
+    margin-bottom: 4px;
+}
+
+/* @end */
+
+
+/* @group Sidebar */
+
+div.sidebar-box {
+    margin: 0px 0px 10px 0px;
+    padding: 20px 20px 0px 20px;
+}
+
+div.coloured {
+    border-bottom: 1px solid #E1D2BD;
+    background: #FDFCF6 url("../images/bg-sidebar-box.gif") top left repeat-x;
+}
+
+/* @end */
+
+
+/* @group Footer */
+
+#Footer {
+    padding: 25px 25px 4px 25px;
+    background: transparent url("../images/bg-footer.gif") top left repeat-x;
+}
+
+#Footer p {
+    font-size: 10px;
+    line-height: 14px;
+    margin-bottom: 8px;
+}
+
+/* @end */
+
+
+/* @group Headers */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: Georgia, "Times New Roman", serif;
+}
+
+h1 {
+    font-size: 21px;
+	margin: 0px 0px 15px 0px;
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px 0px 10px 0px;
+}
+
+h2 a,
+h2 a:link,
+h2 a:visited,
+h2 a:active {
+    color: #333;
+    text-decoration: none;
+}
+
+h2 a:hover {
+    color: #999;
+}
+
+h3.poll-question {
+    margin: 0px 0px 10px;
+    font-weight: bold;
+    /* color: ##B96D00; */
+}
+
+/* @end */
+
+
+/* @group Text */
+
+p {
+	line-height: 19px;
+	margin: 0px 0px 15px 0px;
+}
+
+p.no-margin {
+    margin: 0px !important;
+}
+
+p.post-info {
+    font: 12px Georgia, "Times New Roman", serif;
+}
+
+blockquote {
+	
+}
+
+q {
+	
+}
+
+pre {
+	
+}
+
+code {
+	
+}
+
+hr {
+	
+}
+
+span.amp {
+    font-family: "Baskerville", "Goudy Old Style", "Palatino", "Book Antiqua", serif;
+    font-style: italic;
+}
+
+img.thumbnail {
+    float: left;
+    display: inline;
+    border: 1px solid #6F5230;
+    padding: 2px;
+    background-color: #FFF;
+    margin: 0px 12px 6px 0px;
+}
+
+.numeric {
+    text-align: right;
+}
+
+
+/* @end */
+
+
+/* @group Links */
+
+a,
+a:link,
+a:active,
+a:visited {
+	color: #B96D00;
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+/* @end */
+
+
+/* @group Lists */
+
+ul {
+
+}
+
+li {
+	margin: 0px 0px 6px 0px;
+}
+
+ul.bulleted li {
+    margin-left: 15px;
+    list-style-type: square;
+}
+
+ol {
+	
+}
+
+/* @end */
+
+
+/* @group Forms */
+
+form {
+	
+}
+
+label {
+	
+}
+
+input,
+select,
+textarea {
+	
+}
+
+/* @end */
+
+
+/* @group Next Previous Navigation */
+#NextPreviousNav {
+    float: left;
+    margin: 0px 0px 10px;
+    position: relative;
+    width: 100%;
+}
+
+#NextPreviousNav .btn-previous {
+    float: left;
+    width: 200px;
+}
+
+#NextPreviousNav .btn-next {
+    float: right;
+    width: 200px;
+    text-align: right;
+}
+/* @end */
+
+
+/* @group Poll Results */
+table.poll-results {
+    width: 540px;
+    padding: 0px;
+    margin: 10px 0px;
+    border-collapse: collapse;
+}
+
+table.poll-results tr th.col-response {
+    width: 200px;
+}
+table.poll-results tr th.col-graph {
+    width: 220px;
+}
+table.poll-results tr th.col-percent {
+    width: 60px;
+}
+table.poll-results tr th.col-votes {
+    width: 60px;
+}
+
+table.poll-results tr {
+    border-bottom: 1px solid #DAE2E8;
+}
+table.poll-results tfoot tr {
+    border: none;
+}
+
+table.poll-results tr td,
+table.poll-results tr th {
+    padding: 4px 10px;
+    font-size: 14px;
+}
+
+table.poll-results tr th {
+    color: #697A85
+}
+table.poll-results tfoot tr th {
+    color: #333333;
+}
+
+.bar-graph {
+    position: relative;
+    width: 200px;
+    background-color: #EBEFF2;
+}
+
+.bar {
+    background-color: #125A95;
+}
+
+.bar-type-a {
+    background-color: #FFFF00;
+}
+
+.bar-type-b {
+    background-color: #FF00FF;
+}
+
+.bar-type-c {
+    background-color: #00FFFF;
+}
+
+/* @end */
