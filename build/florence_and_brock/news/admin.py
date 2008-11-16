@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from news.models import NewsItem
+from decisions.admin import IssueInline
 
 
 class NewsItemAdmin(admin.ModelAdmin):
@@ -10,6 +11,7 @@ class NewsItemAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'pub_date'
+    inlines = (IssueInline,)
 
 
 admin.site.register(NewsItem, NewsItemAdmin)
