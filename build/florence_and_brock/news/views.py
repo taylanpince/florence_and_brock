@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.views.generic import simple, list_detail
 from django.shortcuts import get_object_or_404
 
@@ -12,6 +13,7 @@ def home(request):
             extra_context=locals())
 
 
+@login_required
 def newsitem_list(request):
     qs = NewsItem.objects.all()
     return list_detail.object_list(request, qs,
@@ -21,6 +23,7 @@ def newsitem_list(request):
             )
 
 
+@login_required
 def newsitem_archive(request):
     qs = NewsItem.archive_objects.all()
     return list_detail.object_list(request, qs,
@@ -30,6 +33,7 @@ def newsitem_archive(request):
             )
 
 
+@login_required
 def detail(request, year, month, slug):
     year = int(year)
     month = int(month)
