@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+{% load login_tags %}
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     
@@ -42,8 +44,8 @@
     <div id="Wrapper">
 
         <div id="Container">
-    
             <div id="Header">
+                {% block header %}
                 <form id="SearchForm" method="post">
                     <input type="text" name="keywords" />
                     <input type="submit" value="Search" />
@@ -51,17 +53,24 @@
         
                 <div id="HeaderTitle">Florence <span class="amp">&amp;</span> Brock</div>
                 <div id="HeaderSubTitle">a site for us to share information and announcements for our little community</div>
+                {% endblock %}
             </div>
-    
+            
+            {% block main_nav %}
             <ul id="Navigation">
                 <li class="{% block menu_home %}{% endblock %}"><a href="{% url home %}">Home</a></li>
                 <li class="{% block menu_news %}{% endblock %}"><a href="{% url newsitem_list %}">News</a></li>
                 <li class="{% block menu_archive %}{% endblock %}"><a href="{% url newsitem_archive %}">Archive</a></li>
                 <li class="{% block menu_contact %}{% endblock %}"><a href="">Contacts</a></li>
+                <li class="auth-controls">
+                    <form action="{% url home_logout %}" method="post">
+                        <input type="submit" value="Logout" />
+                    </form>
+                </li>
             </ul>
-
+            {% endblock %}
             <div id="Content">
-        
+                {% block content %}
                 <h1>{% block header1 %}{% endblock %}</h1>
                 
                 <div id="Columns">
@@ -91,7 +100,7 @@
                     </div>
                 
                 </div>
-            
+                {% endblock %}
             </div>
             
             <div id="Footer">

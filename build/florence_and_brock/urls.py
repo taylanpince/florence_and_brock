@@ -9,6 +9,6 @@ urlpatterns = patterns('',
     url(r'^decisions/', include('decisions.urls')),
     url(r'^admin/(.*)', admin.site.root),
 
-    # Temporary Base Template
-    (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'base.html'}),
+    url(r'^login/$', 'news.views.home_login', name="home_login"),
+    url(r'^logout/$', 'news.views.home_logout', name="home_logout"),
 )
