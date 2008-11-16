@@ -1,0 +1,20 @@
+{% extends "residents/base.html" %}
+
+{% block left-column %}
+    {% regroup contact_list by unit as unit_list %}
+    <ul id="ContactList">
+    {% for unit in unit_list %}
+        <li>{{ unit.grouper }}
+            <ul>
+                {% for resident in unit.list %}
+                <li>
+                    {{ resident.first_name }} {{ resident.last_name }}
+                    {% if resident.email %} - <a href="mailto:{{ resident.email }}">{{ resident.email }}</a>{% endif %}
+                    {% if resident.phone %} - {{ resident.phone }}{% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

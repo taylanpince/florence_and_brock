@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^$', 'news.views.home', name="home"),
     url(r'^news/', include('news.urls')),
     url(r'^decisions/', include('decisions.urls')),
+    url(r'^contacts/', include('residents.urls')),
     url(r'^admin/(.*)', admin.site.root),
 
     url(r'^login/$', 'news.views.home_login', name="home_login"),

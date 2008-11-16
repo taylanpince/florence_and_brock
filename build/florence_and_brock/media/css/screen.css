@@ -176,6 +176,30 @@ body {
 /* @end */
 
 
+/* @group Contact List */
+
+#ContactList {
+    list-style-type: disc;
+    font-size: 12pt;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+#ContactList ul {
+    list-style-type: square;
+}
+
+#ContactList li {
+    margin-left: 20px;
+    padding-bottom: 10px;
+}
+
+#ContactList ul li {
+    padding: 4px 0px;
+}
+
+/* @end */
+
+
 /* @group Sidebar */
 
 div.sidebar-box {

@@ -9,6 +9,7 @@ class HousingUnit(models.Model):
     class Meta:
         verbose_name = _('housing unit')
         verbose_name_plural = _('housing units')
+        ordering = ('address',)
 
     def __unicode__(self):
         return self.address
