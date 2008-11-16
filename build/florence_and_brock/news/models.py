@@ -1,10 +1,12 @@
 from datetime import datetime
 
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from news.choices import PUBLICATION_STATUS, NEWS_LISTING
 from news.managers import PublishedManager, HomePageManager, NewsListingManager
+from decisions.models import Issue
 
 
 class NewsItem(models.Model):
@@ -41,4 +43,6 @@ class NewsItem(models.Model):
                 'month': self.pub_date.strftime('%m'),
                 'slug': self.slug })
 
-
+    def get_issues(self):
+        ct = ContentType.objects.get_for_model(self)
+        return Issue.objects.filter(content_type=ct, object_id=self.id)

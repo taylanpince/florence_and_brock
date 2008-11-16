@@ -72,7 +72,7 @@
                     </div>
                     
                     <div id="RightColumn">
-                        
+                        {% block right-column %}
                         <div class="sidebar-box coloured">
                             <h2>Updates?</h2>
                             <img src="{{ MEDIA_URL }}images/tmp-image-2.jpg" alt="Temporary Image" class="thumbnail" />
@@ -87,7 +87,7 @@
                                 <li><a href="#">A Final Link</a></li>
                             </ul>
                         </div>
-                        
+                        {% endblock %}
                     </div>
                 
                 </div>

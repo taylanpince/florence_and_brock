@@ -1,5 +1,14 @@
 {% extends 'news/base.html' %}
 
+{% load decisions_tags %}
+
 {% block left-column %}
 {% include "news/newsitem_content.html" %}
 {% endblock left-column %}
+
+{% block right-column %}
+{% for issue in newsitem.get_issues %}
+    {% show_issue issue %}
+{% endfor %}
+{{ block.super }}
+{% endblock %}

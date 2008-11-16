@@ -6,6 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'news.views.home', name="home"),
     (r'^news/', include('news.urls')),
+    (r'^decisions/', include('decisions.urls')),
     (r'^admin/(.*)', admin.site.root),
 
     # Temporary Base Template
