@@ -64,3 +64,4 @@ class Vote(models.Model):
                 'unit': self.voter.unit,
                 'issue': self.choice.issue,
             })
+        super(Vote,self).save()
