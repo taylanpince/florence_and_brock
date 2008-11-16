@@ -1,29 +1,28 @@
 {% load markup %}
-
-<h2>{{ issue.name }}</h2>
-<p>{{ issue.description|markdown }}</p>
-{{ user.unit }}
-{% if unit_voter or not can_vote %}
-    {% if can_vote %}
-        {% ifequal unit_voter user %}
-<p>You have already voted on this issue</p>
-        {% else %}
-<p>{{ unit_voter }} in your unit has already voted on this issue.</p>
-        {% endifequal %}
-    {% else %}
-<p>You aren't eligible to vote</p>
-    {% endif %}
-<h3>Results:</h3>
-<ul>
-    {% for choice in issue.choice_set.all %}
-    <li>{{ choice.text }} : {{ choice.vote_set.count }}</li>
-    {% endfor %}
-</ul>
-{% else %}
-<form action="{% url decisions_issue_vote issue_id=issue.id %}" method="post">
+<div class="sidebar-box">
+    <h2>{{ issue.name }}</h2>
+    <p>{{ issue.description|markdown }}</p>
+{% if existing_vote or not can_vote %}
+    <h3>Results:</h3>
     <ul>
-    {{ form.as_ul }}
-    <li><input type="submit" value="Vote" /></li>
+    {% for choice in issue.choice_set.all %}
+        <li>{{ choice.text }} : {{ choice.vote_set.count }}</li>
+    {% endfor %}
     </ul>
-</form>
+    {% if can_vote %}
+        {% ifequal existing_vote.voter user %}
+    <p>You voted for "{{ existing_vote.choice.text }}" on this issue.</p>
+        {% else %}
+    <p>Your unit (via {{ existing_vote..first_name }}) has voted for "{{ existing_vote.choice.text }}".</p>
+        {% endifequal %}
+    {% endif %}
+
+{% else %}
+    <form action="{% url decisions_issue_vote issue_id=issue.id %}" method="post">
+        <ul>
+            <li>{{ form.choice }}</li>
+            <li><input type="submit" value="Vote" /></li>
+        </ul>
+    </form>
 {% endif %}
+</div>

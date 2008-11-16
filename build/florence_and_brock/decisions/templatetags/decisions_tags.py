@@ -11,14 +11,14 @@ def show_issue(context, issue):
     user = context.get('user', None)
     unit = getattr(user, 'unit', None)
     try:
-        unit_voter = Vote.objects.get(voter__unit=unit, choice__issue=issue).voter
+        existing_vote = Vote.objects.get(voter__unit=unit, choice__issue=issue)
     except (KeyError, AttributeError, Vote.DoesNotExist):
-        unit_voter = None
+        existing_vote = None
 
     form = IssueForm(issue=issue)
     return {
             'issue': issue,
             'form': form,
-            'unit_voter': unit_voter,
+            'existing_vote': existing_vote,
             'user': context.get('user', None),
             'can_vote': unit != None}
