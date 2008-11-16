@@ -25,6 +25,9 @@ MEDIA_URL = '/media/'
 
 ADMIN_MEDIA_PREFIX = MEDIA_URL + 'admin/'
 
+LOGIN_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
 SECRET_KEY = 'b_n_3$(b+5_h1c@cu!dp2xa92bvshzjs*z1ytcrdkmifo=^diq'
 
 AUTHENTICATION_BACKENDS = (
