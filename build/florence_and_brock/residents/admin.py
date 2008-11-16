@@ -8,7 +8,7 @@ from residents.models import ResidentUser
 class ResidentUserAdmin(UserAdmin):
     fieldsets = (
         (None, {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'phone')}),
         (_('Housing'), {'fields': ('unit',)}),
         (_('Permissions'), {'fields': ('is_staff', 'is_active', 'is_superuser', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
