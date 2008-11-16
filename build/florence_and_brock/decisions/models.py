@@ -31,7 +31,7 @@ class Choice(models.Model):
         ordering = ('number',)
 
     def __unicode__(self):
-        return _('%(issue)s choice #%(number)s: %(choice_text)s)') % {
+        return _('%(issue)s choice #%(number)s: %(choice_text)s') % {
             'issue': self.issue,
             'number': self.number,
             'choice_text': self.text
@@ -48,9 +48,10 @@ class Vote(models.Model):
         verbose_name_plural = _('votes')
 
     def __unicode__(self):
-        return _('%(unit)s voted "%(choice)s" on %(issue)s') % {
+        return _('%(voter)s (%(unit)s) voted "%(choice)s" on %(issue)s') % {
+            'voter': self.voter.first_name,
             'unit': self.voter.unit,
-            'choice': self.choice,
+            'choice': self.choice.text,
             'issue': self.choice.issue.name
         }
 
