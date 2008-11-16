@@ -1,5 +1,7 @@
 import datetime
 
+from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -9,6 +11,10 @@ class Issue(models.Model):
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'), blank=True)
     creation_date = models.DateTimeField(_('creation date'), default=datetime.datetime.now)
+
+    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    object_id = models.PositiveIntegerField(blank=True, null=True)
+    content_object = generic.GenericForeignKey("content_type", "object_id")
 
     class Meta:
         verbose_name = _('issue')
