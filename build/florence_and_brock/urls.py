@@ -5,9 +5,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^$', 'news.views.home', name="home"),
-    (r'^news/', include('news.urls')),
-    (r'^decisions/', include('decisions.urls')),
-    (r'^admin/(.*)', admin.site.root),
+    url(r'^news/', include('news.urls')),
+    url(r'^decisions/', include('decisions.urls')),
+    url(r'^admin/(.*)', admin.site.root),
 
     # Temporary Base Template
     (r'^$', 'django.views.generic.simple.direct_to_template', {'template': 'base.html'}),
