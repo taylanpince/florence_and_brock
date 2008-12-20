@@ -2,6 +2,7 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 {% load login_tags %}
+{% load quicklink_tags %}
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -82,19 +83,15 @@
                     
                     <div id="RightColumn">
                         {% block right-column %}
+                        {% comment %}
                         <div class="sidebar-box coloured">
                             <h2>Updates?</h2>
                             <img src="{{ MEDIA_URL }}images/tmp-image-2.jpg" alt="Temporary Image" class="thumbnail" />
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do <a href="#">eiusmod tempor incididunt ut</a> labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                         </div>
-                        
+                        {% endcomment %}
                         <div class="sidebar-box">
-                            <h2>Quick Links</h2>
-                            <ul class="bulleted">
-                                <li><a href="#">Some Link</a></li>
-                                <li><a href="#">Some Other Link</a></li>
-                                <li><a href="#">A Final Link</a></li>
-                            </ul>
+                            {% show_quicklinks %}
                         </div>
                         {% endblock %}
                     </div>

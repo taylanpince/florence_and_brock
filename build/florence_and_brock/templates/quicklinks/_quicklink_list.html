@@ -1,0 +1,7 @@
+{% load markup %}
+<h2>Quick Links</h2>
+<ul class="bulleted">
+    {% for ql in quicklink_list %}
+    <li><a href="{{ ql.link }}">{{ ql.text|markdown }}</a></li>
+    {% endfor %}
+</ul>

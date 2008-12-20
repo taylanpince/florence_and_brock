@@ -76,6 +76,7 @@ INSTALLED_APPS = (
     'houses',
     'residents',
     'pagination',
+    'quicklinks',
     'documents',
     'news',
 )
