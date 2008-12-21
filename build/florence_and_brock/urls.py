@@ -11,5 +11,5 @@ urlpatterns = patterns('',
     url(r'^admin/(.*)', admin.site.root),
 
     url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
-    url(r'^logout/$', 'news.views.home_logout', name="home_logout"),
+    url(r'^logout/$', 'django.contrib.auth.views.logout', name="logout"),
 )

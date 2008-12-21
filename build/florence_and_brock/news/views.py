@@ -18,12 +18,6 @@ def home(request):
                 extra_context=locals())
 
 
-def home_logout(request):
-    if request.method != 'POST':
-        return HttpResponseRedirect('/')
-    return logout(request, '/')
-
-
 @login_required
 def newsitem_list(request):
     qs = NewsItem.objects.all()

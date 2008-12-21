@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block header %}
+    <ul id="HeaderMap">
+        <li>http://maps.google.ca/maps?f=q&hl=en&geocode=&q=</li>
+        <li class="glow">Florence+and+Brock</li>
+        <li>,+Toronto&sll=43.646821,-79.432011&sspn=0.006754,0.019698&ie=UTF8&ll=43.645485,-79.433942&spn=0.006754,0.019698&z=16&iwloc=addr</li>
+    </ul>
+{% endblock %}
+
+{% block main_nav %}{% endblock %}
+{% block content %}
+<div id="Dialog">
+    <h1>You have logged out</h1>
+    <p><a href="{% url login %}">Log back in</a></p>
+</div>
+{% endblock %}
