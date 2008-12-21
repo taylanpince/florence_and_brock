@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import login, logout
 from django.http import HttpResponseRedirect
 from django.views.generic import simple, list_detail
@@ -15,15 +16,10 @@ def home(request):
                 template="news/home.html",
                 extra_context=locals())
     else:
+        form = AuthenticationForm()
         return simple.direct_to_template(request,
                 template="registration/login.html",
                 extra_context=locals())
-
-
-def home_login(request):
-    if request.method != 'POST':
-        return HttpResponseRedirect('/')
-    return login(request)
 
 
 def home_logout(request):
