@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load login_tags %}
-
 {% block header %}
     <ul id="HeaderMap">
         <li>http://maps.google.ca/maps?f=q&hl=en&geocode=&q=</li>
@@ -13,6 +11,11 @@
 {% block main_nav %}{% endblock %}
 {% block content %}
 <div id="Dialog">
-    {% login_form %}
+    <form action="{% url login %}" method="post">
+        <ul>
+            {{ form.as_ul }}
+            <li><input type="submit" value="Give 'er" /></li>
+        </ul>
+    </form>
 </div>
 {% endblock %}

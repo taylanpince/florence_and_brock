@@ -16,7 +16,7 @@ def home(request):
                 extra_context=locals())
     else:
         return simple.direct_to_template(request,
-                template="login.html",
+                template="registration/login.html",
                 extra_context=locals())
 
 
