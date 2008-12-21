@@ -10,6 +10,6 @@ urlpatterns = patterns('',
     url(r'^contacts/', include('residents.urls')),
     url(r'^admin/(.*)', admin.site.root),
 
-    url(r'^login/$', 'news.views.home_login', name="home_login"),
+    url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
     url(r'^logout/$', 'news.views.home_logout', name="home_logout"),
 )

@@ -9,16 +9,12 @@ from news.models import NewsItem
 from news.settings import NEWS_PAGINATE_BY
 
 
+@login_required
 def home(request):
     newsitem = NewsItem.home_objects.all()[0]
     if request.user.is_authenticated():
         return simple.direct_to_template(request,
                 template="news/home.html",
-                extra_context=locals())
-    else:
-        form = AuthenticationForm()
-        return simple.direct_to_template(request,
-                template="registration/login.html",
                 extra_context=locals())
 
 
