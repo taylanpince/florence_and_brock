@@ -1,0 +1,5 @@
+Features to implement on Florenceandbrock.com
+
+* automatic removal of 'click title to read more' on the featured news page
+* style change for title--bold, colour etc.
+* add google stats urchin
