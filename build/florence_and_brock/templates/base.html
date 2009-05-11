@@ -63,7 +63,7 @@
                 <li class="{% block menu_archive %}{% endblock %}"><a href="{% url newsitem_archive %}">Archive</a></li>
                 <li class="{% block menu_contact %}{% endblock %}"><a href="{% url residents_contact_list %}">Contacts</a></li>
                 <li class="auth-controls">
-                    <form action="{% url logout %}" method="post">
+                    <form action="{% url django.contrib.auth.views.logout %}" method="post">
                         <input type="submit" value="Logout" />
                     </form>
                 </li>

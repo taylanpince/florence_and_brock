@@ -10,6 +10,6 @@ urlpatterns = patterns('',
     url(r'^contacts/', include('residents.urls')),
     url(r'^admin/(.*)', admin.site.root),
 
-    url(r'^login/$', 'django.contrib.auth.views.login', name="login"),
-    url(r'^logout/$', 'django.contrib.auth.views.logout', name="logout"),
+    url(r'^account/$', 'django.views.generic.simple.redirect_to', {'url': '/'}),
+    url(r'^account/', include('django.contrib.auth.urls')),
 )

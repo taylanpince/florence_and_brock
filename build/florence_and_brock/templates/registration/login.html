@@ -11,7 +11,7 @@
 {% block main_nav %}{% endblock %}
 {% block content %}
 <div id="Dialog">
-    <form action="{% url login %}" method="post">
+    <form action="{% url django.contrib.auth.views.login %}" method="post">
         <ul>
             {{ form.as_ul }}
             <li><input type="submit" value="Give 'er" /></li>

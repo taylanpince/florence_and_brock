@@ -12,6 +12,6 @@
 {% block content %}
 <div id="Dialog">
     <h1>You have logged out</h1>
-    <p><a href="{% url login %}">Log back in</a></p>
+    <p><a href="{% url django.contrib.auth.views.login %}">Log back in</a></p>
 </div>
 {% endblock %}
