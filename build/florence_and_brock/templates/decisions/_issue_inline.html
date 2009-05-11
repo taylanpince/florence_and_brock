@@ -13,7 +13,7 @@
         {% ifequal existing_vote.voter user %}
     <p>You voted for "{{ existing_vote.choice.text }}" on this issue.</p>
         {% else %}
-    <p>Your unit (via {{ existing_vote..first_name }}) has voted for "{{ existing_vote.choice.text }}".</p>
+    <p>Your unit (via {{ existing_vote.voter.first_name }}) has voted for "{{ existing_vote.choice.text }}".</p>
         {% endifequal %}
     {% endif %}
 
