@@ -18,6 +18,7 @@
     {% endif %}
 
 {% else %}
+    <p>Please cast a vote for your unit, <strong>{{ user.residentuser.unit }}</strong>.</p>
     <form action="{% url decisions_issue_vote issue_id=issue.id %}" method="post">
         <ul>
             <li>{{ form.choice }}</li>
