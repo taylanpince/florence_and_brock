@@ -5,6 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from houses.models import HousingUnit
+
 
 class Issue(models.Model):
     """An issue for which each housing unit has a vote."""
@@ -22,6 +24,14 @@ class Issue(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @property
+    def voters(self):
+        return HousingUnit.objects.filter(residentuser__vote__choice__issue=self)
+
+    @property
+    def non_voters(self):
+        return HousingUnit.objects.exclude(residentuser__vote__choice__issue=self)
 
 
 class Choice(models.Model):
