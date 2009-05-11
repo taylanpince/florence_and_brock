@@ -26,4 +26,18 @@
         </ul>
     </form>
 {% endif %}
+
+{% if issue.non_voters.count %}
+    {% if issue.voters.count %}
+        <p>
+            <strong>{{ issue.voters.count }}</strong> votes have been collected, but
+            <strong>{{ issue.non_voters.count }}</strong> unit{{ issue.non_voters.count|pluralize }} still {{ issue.non_voters.count|pluralize:"hasn't,haven't" }} voted.
+        </p>
+    {% else %}
+        <p>No one has voted yet.</p>
+    {% endif %}
+{% else %}
+    <p>All <strong>{{ issue.voters.count }}</strong> units have voted.</p>
+{% endif %}
+    
 </div>
