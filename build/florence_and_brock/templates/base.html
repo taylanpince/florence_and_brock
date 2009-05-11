@@ -63,6 +63,15 @@
                 <li class="{% block menu_archive %}{% endblock %}"><a href="{% url newsitem_archive %}">Archive</a></li>
                 <li class="{% block menu_contact %}{% endblock %}"><a href="{% url residents_contact_list %}">Contacts</a></li>
                 <li class="auth-controls">
+                    {% if user.first_name %}Hello, <strong>{{ user.first_name }}</strong>.{% endif %}
+                    {% if user.residentuser %}
+                    You're logged in for <strong>{{ user.residentuser.unit }}</strong>
+                    {% endif %}
+                </li>
+                <li class="auth-controls">
+                    <a href="{% url django.contrib.auth.views.password_change %}">Change Password</a>
+                </li>
+                <li class="auth-controls">
                     <form action="{% url django.contrib.auth.views.logout %}" method="post">
                         <input type="submit" value="Logout" />
                     </form>
