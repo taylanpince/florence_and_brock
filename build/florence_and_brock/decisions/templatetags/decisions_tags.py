@@ -15,10 +15,13 @@ def show_issue(context, issue):
     except (KeyError, AttributeError, Vote.DoesNotExist):
         existing_vote = None
 
-    form = IssueForm(issue=issue)
+    if not existing_vote and unit is not None:
+        form = IssueForm(issue=issue)
+    else:
+        form = None
     return {
             'issue': issue,
             'form': form,
             'existing_vote': existing_vote,
             'user': context.get('user', None),
-            'can_vote': unit != None}
+            }

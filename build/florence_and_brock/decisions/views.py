@@ -12,10 +12,11 @@ def issue_vote(request, issue_id):
     issue = get_object_or_404(Issue, id=issue_id)
     object_url = issue.content_object.get_absolute_url()
     try:
-        Vote.objects.get(voter=request.user, choice__issue=issue)
+        existing_vote = Vote.objects.get(voter=request.user, choice__issue=issue)
     except Vote.DoesNotExist:
-        pass
-    else:
+        existing_vote = None
+
+    if existing_vote is not None or getattr(request.user, 'unit', None) is None:
         return HttpResponseRedirect(object_url)
 
     if request.method == 'POST':
