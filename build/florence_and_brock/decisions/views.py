@@ -16,7 +16,7 @@ def issue_vote(request, issue_id):
     except Vote.DoesNotExist:
         existing_vote = None
 
-    if existing_vote is not None or getattr(request.user, 'unit', None) is None:
+    if existing_vote is not None or issue.has_closed or getattr(request.user, 'unit', None) is None:
         return HttpResponseRedirect(object_url)
 
     if request.method == 'POST':

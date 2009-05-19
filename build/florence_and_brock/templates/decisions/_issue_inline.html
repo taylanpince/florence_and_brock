@@ -32,7 +32,11 @@
         <p>
             <strong>{{ issue.voters.count }}</strong> votes have been collected.<br />
             <strong>{{ issue.non_voters.count|apnumber|capfirst }}</strong> unit{{ issue.non_voters.count|pluralize }} 
+            {% if issue.has_closed %}
+            didn't vote.
+            {% else %}
             {{ issue.non_voters.count|pluralize:"hasn't,haven't" }} voted.
+            {% endif %}
         </p>
     {% else %}
         <p>No one has voted yet.</p>
@@ -40,5 +44,12 @@
 {% else %}
     <p>All <strong>{{ issue.voters.count }}</strong> units have voted.</p>
 {% endif %}
-    
+
+{% if issue.closing_date %}
+    {% if issue.has_closed %}
+        <p>Voting has been closed for {{ issue.closing_date|timesince }}.</p>
+    {% else %}
+        <p>Voting closes: <strong>{{ issue.closing_date|naturalday:"F j, Y" }}</strong> at <strong>{{ issue.closing_date|time:"P" }}</strong>.</p>
+    {% endif %}
+{% endif %}
 </div>

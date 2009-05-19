@@ -15,7 +15,7 @@ def show_issue(context, issue):
     except (KeyError, AttributeError, Vote.DoesNotExist):
         existing_vote = None
 
-    if not existing_vote and unit is not None:
+    if not existing_vote and not issue.has_closed and unit is not None:
         form = IssueForm(issue=issue)
     else:
         form = None

@@ -13,6 +13,7 @@ class Issue(models.Model):
     name = models.CharField(_('name'), max_length=100)
     description = models.TextField(_('description'), blank=True)
     creation_date = models.DateTimeField(_('creation date'), default=datetime.datetime.now)
+    closing_date = models.DateTimeField(_('closing date'), null=True, blank=True, default=datetime.datetime.now)
 
     content_type = models.ForeignKey(ContentType, blank=True, null=True,
             verbose_name=_('content type'))
@@ -33,6 +34,13 @@ class Issue(models.Model):
     @property
     def non_voters(self):
         return HousingUnit.objects.exclude(residentuser__vote__choice__issue=self)
+
+    @property
+    def has_closed(self):
+        if self.closing_date is None:
+            return False
+        else:
+            return self.closing_date < datetime.datetime.now()
 
 
 class Choice(models.Model):
