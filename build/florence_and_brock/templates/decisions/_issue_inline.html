@@ -1,4 +1,5 @@
 {% load markup %}
+{% load humanize %}
 <div class="sidebar-box">
     <h2>{{ issue.name }}</h2>
     <p>{{ issue.description|markdown }}</p>
@@ -29,8 +30,9 @@
 {% if issue.non_voters.count %}
     {% if issue.voters.count %}
         <p>
-            <strong>{{ issue.voters.count }}</strong> votes have been collected, but
-            <strong>{{ issue.non_voters.count }}</strong> unit{{ issue.non_voters.count|pluralize }} still {{ issue.non_voters.count|pluralize:"hasn't,haven't" }} voted.
+            <strong>{{ issue.voters.count }}</strong> votes have been collected.<br />
+            <strong>{{ issue.non_voters.count|apnumber|capfirst }}</strong> unit{{ issue.non_voters.count|pluralize }} 
+            {{ issue.non_voters.count|pluralize:"hasn't,haven't" }} voted.
         </p>
     {% else %}
         <p>No one has voted yet.</p>
