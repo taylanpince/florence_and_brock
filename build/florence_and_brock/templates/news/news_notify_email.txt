@@ -1,0 +1,5 @@
+{% if user.first_name %}Dear {{ user.first_name }},{% else %}Dear Owner,{% endif %}
+
+{% if user.unit %}You're receiving this message because you're on file as the homeowner of {{ user.unit.address }} at {{ site.name }}.{% endif %}
+
+A news item has been added to the site. It can be viewed at this address: http://{{ site.domain }}{{ news_item.get_absolute_url }}

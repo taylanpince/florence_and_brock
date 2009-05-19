@@ -2,10 +2,12 @@ from datetime import datetime
 
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.db.models.signals import post_save
 from django.utils.translation import ugettext_lazy as _
 
 from news.choices import PUBLICATION_STATUS, NEWS_LISTING
 from news.managers import PublishedManager, HomePageManager, NewsListingManager
+from news.signals import handle_news_save
 from decisions.models import Issue
 
 
@@ -46,3 +48,6 @@ class NewsItem(models.Model):
     def get_issues(self):
         ct = ContentType.objects.get_for_model(self)
         return Issue.objects.filter(content_type=ct, object_id=self.id)
+
+
+post_save.connect(handle_news_save, sender=NewsItem)

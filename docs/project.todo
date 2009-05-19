@@ -3,5 +3,5 @@ Florence and Brock Tasks:
 ✓ password reset
 ✓ show total votes cast and number of votes still needed
 ✓ add a close_date field to Issue. After the date passes, go into read-only mode
-- email all residents when a new news item is added. Include a link to the news item detail page
+✓ email all residents when a new news item is added. Include a link to the news item detail page
 - profile editing
