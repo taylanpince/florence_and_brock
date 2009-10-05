@@ -43,7 +43,7 @@ def detail(request, year, month, slug):
     year = int(year)
     month = int(month)
     newsitem = get_object_or_404(
-        NewsItem.objects,
+        NewsItem.archive_objects,
         pub_date__year=year,
         pub_date__month=month,
         slug=slug)
